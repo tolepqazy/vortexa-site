@@ -1,0 +1,102 @@
+
+.buyer-guide,.buyer-questions,.room-section,.water-inner,.evening-layout,.vacuum-choice > div { padding-block: var(--section); }
+.buyer-guide { background: var(--bg); }
+.guide-intro,.room-section,.water-inner,.buyer-questions { display: grid; grid-template-columns: var(--cols-2); gap: var(--cols-gap); }
+.guide-intro { align-items: end; }
+.guide-intro .pd-heading,.room-intro .pd-heading,.buyer-questions .pd-heading,.water-inner .pd-heading,.evening-layout .pd-heading,.vacuum-choice .pd-heading { font-size: var(--fs-h2); }
+.guide-intro .pd-lead { max-width: 47ch; }
+.guide-entries { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1.2rem,3.7vw,4.3rem); margin-top: clamp(1.8rem,3vw,3.9rem); }
+.guide-entries > div { padding-top: 1.2rem; border-top: 1px solid var(--line-strong); }
+.guide-entries h3,.vacuum-lines h3 { font-size: var(--fs-h3); letter-spacing: -.035em; line-height: 1.14; margin-bottom: .52em; text-wrap: balance; }
+.guide-entries p,.vacuum-lines p,.room-example,.compare-note { max-width: 52ch; font-size: var(--fs-body); line-height: 1.55; }
+.room-section { align-items: center; }
+.room-intro .pd-lead,.water-inner .pd-lead,.evening-layout .pd-lead { margin-top: 1.1rem; }
+.room-calculator { background: var(--surface); color: var(--ink); padding: clamp(1.3rem,3.9vw,4.4rem); }
+.room-fields { display: grid; grid-template-columns: 1fr auto 1fr; gap: .8rem; max-width: 23rem; align-items: end; }
+.room-fields label { display: grid; gap: .45rem; font-size: var(--fs-body); }
+.room-fields .room-times,.room-fields > span { font-size: var(--fs-h3); padding-bottom: .45rem; }
+.room-fields input { width: 100%; min-width: 0; border: 1px solid var(--line-strong); border-radius: .2rem; padding: .45rem .7rem; color: var(--ink); background: var(--bg); font: inherit; font-size: var(--fs-h3); line-height: 1.24; }
+.room-fields input[aria-invalid="true"] { border: 2px solid #666668; }
+.room-answer { border-top: 1px solid var(--line); margin-top: 1.45rem; padding-top: 1.05rem; }
+.room-answer strong { display: block; font-weight: 400; font-size: var(--fs-h1); line-height: 1.08; letter-spacing: -.045em; overflow-wrap: anywhere; }
+.room-answer p { font-size: var(--fs-body); margin-top: .4rem; }
+.water-section { background: var(--dark-2); color: var(--on-dark); }
+.water-inner { align-items: center; }
+.water-inner .pd-overline { color: var(--on-dark-muted); }
+.water-inner .pd-heading,.evening-layout .pd-heading { margin-top: .22em; }
+.water-inner .pd-lead { color: var(--on-dark-muted); }
+.water-tool { border-left: 1px solid rgba(170,170,172,0.33); padding-left: clamp(1.5rem,3.9vw,4.2rem); }
+.water-tool .tab-line button { border-color: var(--line-strong); color: var(--on-dark); min-width: 3.8rem; }
+.water-tool .tab-line button[aria-selected="true"] { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.water-tool .tab-line button:hover:not([aria-selected="true"]) { background: rgba(254,254,255,0.13); }
+.water-result { padding-top: 1.4rem; }
+.water-result h3 { font-size: var(--fs-display); line-height: 1.05; letter-spacing: -.045em; }
+.water-result h3 span { font-size: var(--fs-h2); }
+.water-label { color: var(--on-dark-muted); font-size: var(--fs-body); margin-bottom: .2rem; }
+.water-line { height: .55rem; background: #5a5a5c; margin: .95rem 0 .65rem; }
+.water-line i { display: block; height: 100%; background: var(--line); }
+.water-result > p:last-child { font-size: var(--fs-body); }
+.evening-section { background: var(--surface); color: var(--ink); }
+.evening-layout { display: grid; grid-template-columns: var(--cols-2); gap: var(--cols-gap); align-items: center; }
+.evening-layout figure img { aspect-ratio: 1.5; object-fit: cover; }
+.vacuum-choice { background: var(--surface); color: var(--ink); }
+.vacuum-lines { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.3rem,4.5vw,5.5rem); margin: 1.9rem 0 1.5rem; }
+.vacuum-lines > div { border-top: 1px solid var(--line-strong); padding-top: 1.15rem; }
+.buyer-questions { border-top: 1px solid var(--line); align-items: start; }
+.buyer-questions .pd-heading { margin-block: 0 .38em; }
+.question-list { min-width: 0; }
+.question-list details { border-top: 1px solid var(--line); }
+.question-list details:last-child { border-bottom: 1px solid var(--line); }
+.question-list summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.12rem 0; cursor: pointer; font-weight: 500; font-size: var(--fs-body); line-height: 1.35; }
+.question-list summary::after { content: '+'; color: var(--muted); align-self: flex-start; font-size: var(--fs-h3); font-weight: 400; line-height: 1; }
+.question-list details[open] summary::after { content: '−'; }
+.question-list summary::-webkit-details-marker,.quote-box summary::-webkit-details-marker { display: none; }
+.question-list details p { padding: 0 1.5rem 1.15rem 0; font-size: var(--fs-body); line-height: 1.52; color: var(--muted); max-width: 63ch; }
+.question-list summary:focus-visible,.quote-box summary:focus-visible,.model-menu summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.quote-box { max-width: 39rem; }
+.quote-box summary:hover { text-decoration-color: currentColor; }
+.quote-box summary { display: inline-flex; width: fit-content; align-items: center; gap: .6rem; min-height: 44px; cursor: pointer; font-size: var(--fs-body); font-weight: 500; line-height: 1.3; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .34em; text-decoration-color: var(--line-strong); }
+.quote-box summary::after { content: ''; display: inline-block; width: .44rem; height: .44rem; border-right: 1px solid; border-bottom: 1px solid; transform: translateY(-.12rem) rotate(45deg); flex: none; }
+.quote-box[open] summary::after { transform: translateY(.1rem) rotate(225deg); }
+.quote-content { margin-top: .85rem; padding: 1rem; background: var(--surface); border: 1px solid var(--line); }
+.quote-content > p { font-size: var(--fs-body); line-height: 1.4; }
+.quote-content textarea { display: block; width: 100%; min-height: 6.5rem; margin: .75rem 0; padding: .75rem; resize: vertical; color: var(--ink); background: var(--bg); border: 1px solid var(--line-strong); border-radius: .15rem; font: inherit; font-size: var(--fs-body); line-height: 1.45; }
+.quote-status { display: block; margin-top: .45rem; font-size: var(--fs-body); }
+.quote-status:empty { display: none; }
+.with-thumb .order-inner { grid-template-columns: minmax(0,.8fr) minmax(0,1.15fr); }
+.with-thumb .order-thumb img { aspect-ratio: 1.48; }
+.cart-summary .quote-content .button { width: fit-content; margin: 0; }
+.cmp-card p,.story-excerpt { font-size: var(--fs-body); line-height: 1.45; color: var(--muted); max-width: 52ch; }
+.compare-note { margin-top: 1rem; color: var(--muted); }
+.compare-next { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 1.9rem; }
+@media (min-width:761px) and (max-width:1120px) {
+  .model-nav-inner { gap: 1.1rem; }
+  .model-links { gap: 1rem; }
+  .model-links a { font-size: var(--fs-small); }
+}
+@media (max-width:760px) {
+  .room-section,.water-inner,.evening-layout,.buyer-questions,.guide-intro { grid-template-columns: minmax(0,1fr); gap: 1.45rem; }
+  .buyer-guide,.buyer-questions,.room-section,.water-inner,.evening-layout,.vacuum-choice > div { padding-block: var(--section); }
+  .guide-intro .pd-heading,.room-intro .pd-heading,.buyer-questions .pd-heading,.water-inner .pd-heading,.evening-layout .pd-heading,.vacuum-choice .pd-heading { font-size: var(--fs-h2); }
+  .guide-entries { grid-template-columns: 1fr; gap: 1rem; margin-top: 1.35rem; }
+  .guide-entries > div { padding-top: .9rem; }
+  .guide-entries p { max-width: 60ch; }
+  .room-fields { max-width: 100%; }
+  .water-tool { border-left: 0; border-top: 1px solid rgba(158,158,160,0.4); padding: 1.25rem 0 0; }
+  .water-result { padding-top: .9rem; }
+  .evening-layout > div { grid-row: 1; }
+  .vacuum-lines { grid-template-columns: 1fr; gap: 1rem; }
+  .question-list summary { padding-block: .95rem; }
+  .question-list details p { padding-right: .35rem; }
+  .with-thumb .order-inner { grid-template-columns: minmax(0,1fr); gap: 1.45rem; }
+  .with-thumb .order-thumb { width: min(100%,24rem); }
+  .with-thumb .order-copy h2 { font-size: var(--fs-h2); }
+}
+@media print {
+  .room-fields,.quote-box,.model-select { display: none !important; }
+  .question-list details::details-content { display: contents; }
+}
+@media(max-width:760px) {
+  .pd-select .order-copy { grid-row: 1; }
+}
+.order-copy .quote-box { margin-top: var(--s-16); }

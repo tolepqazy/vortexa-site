@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="kk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тапсырысты рәсімдеу — Vortexa</title>
+<meta name="description" content="Vortexa тапсырысын тіркелусіз рәсімдеу: байланыс, жеткізу, төлем.">
+<meta name="theme-color" content="#111214">
+<meta name="robots" content="noindex">
+<link rel="alternate" hreflang="ru" href="../checkout.html"><link rel="alternate" hreflang="kk" href="checkout.html">
+<link rel="icon" type="image/png" href="../assets/mark.png">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/ui.css">
+<link rel="stylesheet" href="../assets/commerce.css">
+<script defer src="../assets/store.js"></script>
+<script defer src="../assets/shell.js"></script>
+<script defer src="../assets/checkout.js"></script>
+<link rel="stylesheet" href="../assets/motion.css">
+<script src="../assets/motion.js"></script>
+</head>
+<body data-root="../" data-page="checkout.html">
+<div data-shell="header"></div>
+<main id="main"><section class="wrap cart-page" data-checkout-page aria-labelledby="co-title">
+  <nav class="crumbs" aria-label="Сайттағы жол"><a href="index.html">Басты бет</a><span aria-hidden="true">/</span><a href="cart.html">Себет</a><span aria-hidden="true">/</span><span>Рәсімдеу</span></nav>
+  <div class="cart-head"><h1 id="co-title">Рәсімдеу</h1>
+    <div class="co-head-side" id="co-head-side" hidden><p class="cart-lead" data-co-lead></p><a class="link-line" href="cart.html">Құрамын өзгерту</a></div></div>
+
+  <div id="co-empty" class="cart-empty" hidden><div class="empty"><h2>Рәсімдейтін ештеңе жоқ</h2>
+    <p>Себет бос. Каталогтан модель таңдап, «Сатып алу» батырмасын басыңыз, содан кейін осында оралыңыз.</p>
+    <a class="btn btn-secondary" href="index.html#catalog">Каталогқа өту</a></div></div>
+
+  <form class="cart-layout" id="co-form" novalidate hidden>
+    <div class="co-main">
+      <section class="co-part" data-part="contacts" aria-labelledby="co-part-contacts">
+        <h2 class="co-part-title" id="co-part-contacts"><span class="co-num" aria-hidden="true">1</span>Байланыс</h2>
+        <p class="co-intro" data-co-guest>Тіркелу міндетті емес. Кабинетіңіз болса, <a href="account.html">кіріңіз</a>: аты, телефон және мекенжайлар өздігінен толады.</p>
+        <p class="co-intro" data-co-user hidden></p>
+        <div class="co-fields">
+          <div class="field-row">
+            <div class="field"><label for="co-name">Аты</label>
+              <input class="input" id="co-name" aria-required="true" name="name" autocomplete="name" maxlength="60" aria-describedby="co-name-err">
+              <p class="field-error" id="co-name-err"></p></div>
+            <div class="field"><label for="co-phone">Телефон</label>
+              <input class="input" id="co-phone" aria-required="true" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 700 000 00 00" maxlength="20" aria-describedby="co-phone-hint co-phone-err">
+              <p class="field-hint" id="co-phone-hint">Менеджер осы нөмірге қоңырау шалады.</p>
+              <p class="field-error" id="co-phone-err"></p></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="co-city">Қала</label>
+              <select class="select" id="co-city" aria-required="true" name="city" autocomplete="address-level2" aria-describedby="co-city-err"></select>
+              <p class="field-error" id="co-city-err"></p></div>
+            <div class="field co-field-wrap" data-co-other hidden><label for="co-city-other">Елді мекен</label>
+              <input class="input" id="co-city-other" aria-required="true" name="cityOther" maxlength="60" aria-describedby="co-city-other-err">
+              <p class="field-error" id="co-city-other-err"></p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="co-part" data-part="delivery" aria-labelledby="co-part-delivery">
+        <h2 class="co-part-title" id="co-part-delivery"><span class="co-num" aria-hidden="true">2</span>Алу тәсілі</h2>
+        <div class="choice" role="radiogroup" aria-label="Алу тәсілі">
+          <label class="radio"><input type="radio" name="delivery" value="courier" checked><span>Курьер есікке дейін жеткізеді<small data-co-courier-days>Қазақстан бойынша [1–7 күн]</small></span><span class="choice-side" data-co-courier-price>[қалаға байланысты]</span></label>
+          <label class="radio"><input type="radio" name="delivery" value="pickup"><span>Өзі алып кету<small data-co-pickup-note>[Алматы, беру пунктінің мекенжайы], [келесі күні]</small></span><span class="choice-side" data-term="pickupFree">[тегін]</span></label>
+        </div>
+        <div class="co-fields" data-co-courier>
+          <div class="stack co-saved" data-co-saved hidden>
+            <p class="co-sub" id="co-saved-title">Сақталған мекенжайлар</p>
+            <div class="choice" role="radiogroup" aria-labelledby="co-saved-title" data-co-saved-list></div>
+          </div>
+          <div class="field"><label for="co-address">Мекенжай</label>
+            <input class="input" id="co-address" aria-required="true" name="address" autocomplete="street-address" maxlength="160" placeholder="Көше, үй, пәтер" aria-describedby="co-address-err">
+            <p class="field-error" id="co-address-err"></p></div>
+          <label class="check co-field-wrap" data-co-save-address hidden><input type="checkbox" name="saveAddress" checked><span>Мекенжайды кабинетке сақтау</span></label>
+        </div>
+        <p class="co-pickup" data-co-pickup hidden><strong>[Алматы, беру пунктінің мекенжайы]</strong><br><span data-term="pickupHours">[Дс–Сб, 10:00–19:00]</span>. Тапсырыс дайын болғанда менеджер қоңырау шалады. Алу үшін тапсырыс нөмірін айтыңыз.</p>
+        <div class="field"><label for="co-comment">Түсініктеме</label>
+          <textarea class="textarea" id="co-comment" name="comment" maxlength="500" rows="3" aria-describedby="co-comment-hint"></textarea>
+          <p class="field-hint" id="co-comment-hint">Міндетті емес. Домофон коды, қоңырау шалуға ыңғайлы уақыт.</p></div>
+      </section>
+
+      <section class="co-part" data-part="payment" aria-labelledby="co-part-payment">
+        <h2 class="co-part-title" id="co-part-payment"><span class="co-num" aria-hidden="true">3</span>Төлем</h2>
+        <div class="choice" role="radiogroup" aria-label="Төлем тәсілі">
+          <label class="radio"><input type="radio" name="payment" value="manager" checked><span>Менеджермен келісу<small>Менеджер қоңырау шалып, тапсырысты растайды және ыңғайлы төлем тәсілін ұсынады.</small></span></label>
+          <label class="radio"><input type="radio" name="payment" value="kaspi" disabled aria-describedby="co-soon-kaspi"><span>Kaspi<small>Kaspi.kz қосымшасында төлеу</small></span><span class="choice-side" id="co-soon-kaspi">жақында</span></label>
+          <label class="radio"><input type="radio" name="payment" value="card" disabled aria-describedby="co-soon-card"><span>Картамен онлайн<small>Visa, Mastercard</small></span><span class="choice-side" id="co-soon-card">жақында</span></label>
+        </div>
+      </section>
+    </div>
+
+    <aside class="cart-summary co-summary" aria-labelledby="co-sum-title">
+      <h2 id="co-sum-title">Тапсырысыңыз</h2>
+      <ul class="co-items" data-co-items aria-label="Тапсырыстағы тауарлар"></ul>
+      <dl class="summary">
+        <div><dt data-co-items-label>Тауарлар</dt><dd data-co-subtotal></dd></div>
+        <div><dt>Жеткізу</dt><dd data-co-ship>[қалаға байланысты]</dd></div>
+        <div class="summary-total"><dt>Барлығы</dt><dd class="price" data-co-total></dd></div>
+      </dl>
+      <div class="co-agree-wrap">
+        <label class="check co-agree"><input type="checkbox" id="co-agree" aria-required="true" name="agree" aria-describedby="co-agree-err"><span><a href="offer.html">Оферта</a> шарттарымен және <a href="privacy.html">деректерді өңдеумен</a> келісемін</span></label>
+        <p class="field-error" id="co-agree-err"></p>
+      </div>
+      <div class="notice notice-error co-error-sum" id="co-errors" role="alert" hidden></div>
+      <button class="btn btn-buy btn-block co-submit" type="submit"><span data-co-submit-text>Тапсырысты рәсімдеу</span><svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-5-5 5 5-5 5"/></svg></button>
+      <p class="cart-note">Қазір төлеудің қажеті жоқ. Менеджер қоңырау шалғаннан кейін тапсырыс расталады, ал күйі сілтеме арқылы көрінеді.</p>
+    </aside>
+  </form>
+  <noscript><p class="cart-note">Рәсімдеу JavaScript қосулы болғанда жұмыс істейді.</p></noscript>
+</section></main>
+<div data-shell="footer"></div>
+</body></html>

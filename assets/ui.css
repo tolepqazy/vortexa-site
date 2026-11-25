@@ -1,0 +1,175 @@
+/*
+ * Vortexa v7 — общие компоненты для новых страниц.
+ * Токены цветов и шрифт объявлены в site.css (:root). Здесь — только компоненты.
+ * Правила: углы 0, без теней и градиентов, золото (--accent) только на главном действии.
+ * Примеры разметки — design/v7/FOUNDATION.md.
+ */
+
+/* ---------- Раскладка страницы ---------- */
+.page { padding-block: var(--s-40) var(--s-104); min-height: 56svh; }
+.page-head { display: grid; gap: var(--s-16); margin-bottom: var(--s-40); }
+.page-title { font-size: var(--fs-h1); line-height: 1.02; letter-spacing: -.045em; font-weight: 400; overflow-wrap: anywhere; }
+.page-lead { max-width: 56ch; color: var(--muted); font-size: var(--fs-body); line-height: 1.55; }
+.section-title { font-size: var(--fs-h2); line-height: 1.1; letter-spacing: -.045em; font-weight: 400; }
+.split { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(18rem, .75fr); gap: clamp(var(--s-24), 5vw, var(--s-104)); align-items: start; }
+.stack > * + * { margin-top: var(--s-16); }
+.stack > .section-title:not(:first-child) { margin-top: var(--s-40); }
+.muted { color: var(--muted); }
+.price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 860px) { .split { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Кнопки ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 48px; padding: 0 var(--s-24);
+  border: 1px solid transparent; border-radius: 0; font: 500 var(--fs-body)/1.2 var(--font); text-align: center; cursor: pointer;
+  transition: background-color .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease); }
+.btn svg { width: 1.15rem; height: 1.15rem; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .45; cursor: default; }
+.btn:active:not(:disabled) { transform: translateY(1px); }
+
+/* Главное действие: «Купить», «Оформить заказ», «Войти». Одно на экране. */
+.btn-buy { min-height: 56px; min-width: min(240px, 100%); justify-content: space-between; gap: var(--s-24); padding: 0 var(--s-24);
+  background: var(--accent); color: var(--on-accent); font-size: var(--fs-body); }
+@media (hover: hover) { .btn-buy:hover { background: var(--accent-hover); } }   /* на телефоне касание не оставляет «наведённый» цвет */
+.btn-buy .arrow { transition: transform .22s var(--ease); }
+.btn-buy:hover .arrow, .btn-buy:focus-visible .arrow { transform: translateX(4px); }
+.btn-buy:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.btn-buy.is-done { background: var(--ink); color: var(--on-dark); }
+
+/* Кнопок на сайте три вида: главная (.btn-buy, золото, одна на экране), вторичная (контур, ниже),
+   текстовая ссылка (.link-line / .btn-text). Второе действие рядом с главной — всегда ссылка.
+   .btn-quiet, .button-line — старые имена той же вторичной кнопки. */
+.btn-secondary, .btn-quiet { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn-secondary:hover, .btn-quiet:hover { background: var(--ink); color: var(--on-dark); }
+.on-dark .btn-secondary { color: var(--on-dark); border-color: var(--on-dark); }
+.on-dark .btn-secondary:hover { background: var(--on-dark); color: var(--ink); }
+.btn-sm { padding: 0 var(--s-16); }
+.btn-block { width: 100%; }
+
+/* Текстовая ссылка-действие с линией снизу. */
+.btn-text, .link-line { display: inline-flex; align-items: center; min-height: 44px; gap: .5rem; padding: 0; background: none; border: 0;
+  color: inherit; font: 500 var(--fs-body)/1.3 var(--font); text-decoration: underline; text-decoration-thickness: 1px;
+  text-underline-offset: .34em; text-decoration-color: var(--line-strong); cursor: pointer; width: fit-content; }
+.btn-text:hover, .link-line:hover { text-decoration-color: currentColor; }
+
+/* ---------- Поля ---------- */
+.field { display: grid; gap: var(--s-8); min-width: 0; }
+.field > label, .field-label { font-size: var(--fs-body); font-weight: 500; }
+.field-hint { color: var(--muted); font-size: var(--fs-small); line-height: 1.4; }
+.field-error { color: var(--danger); font-size: var(--fs-small); line-height: 1.4; }
+.field-error:empty { display: none; }
+.input, .select, .textarea { width: 100%; min-height: 48px; padding: .75rem var(--s-16); border: 1px solid var(--line-strong); border-radius: 0;
+  background: var(--bg); color: var(--ink); font: 400 var(--fs-body)/1.4 var(--font); appearance: none; }
+.textarea { min-height: 7.5rem; resize: vertical; }
+.select { padding-right: 2.75rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111214' stroke-width='1.6'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .9rem center; background-size: 1.1rem; }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--muted); }
+.input:focus, .select:focus, .textarea:focus { outline: 2px solid var(--ink); outline-offset: -1px; border-color: var(--ink); }
+.input::placeholder, .textarea::placeholder { color: var(--muted); }
+.input[aria-invalid="true"], .select[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: var(--danger); }
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-16); }
+@media (max-width: 560px) { .field-row { grid-template-columns: minmax(0, 1fr); } }
+
+/* Чекбокс и радио: нативные, в цвете графита, с подписью справа. */
+.check, .radio { display: flex; align-items: flex-start; gap: .75rem; min-height: 44px; padding-block: .6rem; cursor: pointer; line-height: 1.4; }
+.check input, .radio input { flex: none; width: 1.25rem; height: 1.25rem; margin: .05rem 0 0; accent-color: var(--ink); cursor: pointer; }
+.check small, .radio small { display: block; color: var(--muted); font-size: var(--fs-small); }
+/* Радио-плитка: выбор доставки или оплаты. */
+.choice { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.choice .radio { padding: var(--s-16) 0; border-bottom: 1px solid var(--line); }
+.choice .radio:has(input:checked) { font-weight: 500; }
+.choice .radio .choice-side { margin-left: auto; color: var(--muted); font-weight: 400; white-space: nowrap; }
+
+/* ---------- Количество ---------- */
+.qty { display: inline-flex; width: fit-content; justify-self: start; align-items: stretch; border: 1px solid var(--line-strong); height: 44px; }
+.qty button { width: 44px; display: grid; place-items: center; font-size: var(--fs-body); line-height: 1; color: var(--ink); }
+.qty button:hover:not(:disabled) { background: var(--surface); }
+.qty output, .qty input { min-width: 2.5rem; display: grid; place-items: center; text-align: center; font-variant-numeric: tabular-nums; border: 0; background: none; font: inherit; }
+
+/* ---------- Таблица ---------- */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table { width: 100%; border-collapse: collapse; font-size: var(--fs-body); text-align: left; }
+.table th, .table td { padding: .9rem var(--s-16) .9rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table thead th { font-weight: 500; color: var(--muted); font-size: var(--fs-small); border-bottom-color: var(--ink); white-space: nowrap; }
+.table td.num, .table th.num { text-align: right; font-variant-numeric: tabular-nums; padding-right: 0; }
+.table tbody tr:hover { background: var(--surface); }
+.table a { text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: .25em; }
+
+/* ---------- Список заказов ---------- */
+.order-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.order-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-8) var(--s-24); padding: var(--s-16) 0; border-bottom: 1px solid var(--line); }
+.order-row a { font-weight: 500; }
+.order-row .order-meta { color: var(--muted); font-size: var(--fs-small); }
+.order-row .order-sum { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- Статус заказа: текст + квадрат, который «заполняется» по мере движения ---------- */
+.status { display: inline-flex; align-items: center; gap: .5rem; font-size: var(--fs-body); line-height: 1.3; white-space: nowrap; }
+.status::before { content: ""; width: .625rem; height: .625rem; flex: none; border: 1.5px solid var(--ink); background: transparent; }
+.status[data-status="confirmed"]::before { border-width: 3px; }
+.status[data-status="paid"]::before { background: var(--muted); border-color: var(--muted); }
+.status[data-status="shipped"]::before, .status[data-status="delivered"]::before { background: var(--ink); }
+.status[data-status="delivered"] { font-weight: 500; }
+.status[data-status="cancelled"] { color: var(--muted); }
+.status[data-status="cancelled"]::before { border-color: var(--line-strong); }
+
+/* ---------- Уведомление на странице ---------- */
+.notice { display: flex; align-items: flex-start; gap: .75rem; padding: var(--s-16); background: var(--surface); color: var(--ink); line-height: 1.45; }
+.notice > svg { width: 1.25rem; height: 1.25rem; margin-top: .1rem; }
+.notice a { text-decoration: underline; text-underline-offset: .25em; font-weight: 500; }
+.notice-ok { background: var(--dark); color: var(--on-dark); }
+.notice-error { background: var(--bg); color: var(--danger); border: 1px solid var(--danger); }
+.notice[hidden] { display: none; }
+
+/* ---------- Пустое состояние ---------- */
+.empty { display: grid; justify-items: start; gap: var(--s-16); padding: var(--s-64) 0; border-top: 1px solid var(--line); }
+.empty h2 { font-size: var(--fs-h2); line-height: 1.08; letter-spacing: -.045em; font-weight: 400; }
+.empty p { max-width: 44ch; color: var(--muted); line-height: 1.55; }
+
+/* ---------- Шаги оформления (настоящая последовательность — номера уместны) ---------- */
+.steps { display: flex; gap: var(--s-24); list-style: none; margin: 0 0 var(--s-40); padding: 0; counter-reset: step; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.steps li { counter-increment: step; display: flex; align-items: center; gap: .6rem; padding: var(--s-16) 0; color: var(--muted); white-space: nowrap; font-size: var(--fs-body); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.steps li::before { content: counter(step); display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border: 1px solid currentColor; font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.steps li[aria-current="step"] { color: var(--ink); border-bottom-color: var(--ink); font-weight: 500; }
+.steps li.is-done { color: var(--ink); }
+.steps li.is-done::before { content: "✓"; background: var(--ink); color: var(--on-dark); border-color: var(--ink); }
+
+/* ---------- Форма-карточка ---------- */
+.form-card { background: var(--surface); padding: clamp(var(--s-24), 3vw, var(--s-40)); display: grid; gap: var(--s-24); }
+.form-card > h2 { font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -.035em; font-weight: 400; }
+.form-card .input, .form-card .select, .form-card .textarea { background: var(--bg); }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-16) var(--s-24); }
+
+/* ---------- Итог: строки «название — значение» ---------- */
+.summary { display: grid; gap: 0; margin: 0; }
+.summary > div { display: flex; justify-content: space-between; gap: var(--s-16); padding: .75rem 0; border-bottom: 1px solid var(--line); }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.summary .summary-total { border-bottom: 0; padding-top: var(--s-16); font-size: var(--fs-h3); }
+.summary .summary-total dt { color: var(--ink); }
+
+/* ---------- Вкладки ---------- */
+.tabs { display: flex; gap: var(--s-24); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs a, .tabs button { display: inline-flex; align-items: center; min-height: 48px; padding: 0; color: var(--muted); white-space: nowrap;
+  border-bottom: 2px solid transparent; margin-bottom: -1px; font-size: var(--fs-body); }
+.tabs a:hover, .tabs button:hover { color: var(--ink); }
+.tabs [aria-selected="true"], .tabs [aria-current="page"], .tabs [aria-current="true"] { color: var(--ink); border-bottom-color: var(--ink); font-weight: 500; }
+
+/* ---------- Строка условий под «Купить» ---------- */
+.terms { display: flex; flex-wrap: wrap; gap: var(--s-8) var(--s-24); margin: 0; padding: 0; list-style: none; font-size: var(--fs-body); color: var(--muted); }
+.terms li { display: inline-flex; align-items: center; gap: .5rem; }
+.terms svg { width: 1.15rem; height: 1.15rem; color: var(--ink); }
+.terms strong { color: var(--ink); font-weight: 500; }
+
+/* ---------- Липкая плашка покупки (телефон) ---------- */
+.buybar { position: fixed; z-index: 7; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: var(--s-16);
+  padding: var(--s-8) var(--s-16) calc(var(--s-8) + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line);
+  transform: translateY(110%); transition: transform .28s var(--ease); }
+.buybar.is-shown { transform: none; }
+.buybar-text { min-width: 0; flex: 1; display: grid; line-height: 1.25; }
+.buybar-text strong { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.buybar-text span { color: var(--muted); font-size: var(--fs-small); }
+.buybar .btn-buy { min-width: 0; flex: 0 1 15rem; gap: var(--s-16); padding: 0 var(--s-16); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn-buy .arrow, .buybar { transition: none; }
+}

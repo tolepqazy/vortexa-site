@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="kk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тапсырыс күйі — Vortexa</title>
+<meta name="description" content="Vortexa тапсырысын нөмір мен телефон арқылы тауып, күйін көру.">
+<meta name="theme-color" content="#111214">
+<link rel="alternate" hreflang="ru" href="../track.html"><link rel="alternate" hreflang="kk" href="track.html">
+<link rel="icon" type="image/png" href="../assets/mark.png">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/ui.css">
+<link rel="stylesheet" href="../assets/commerce.css">
+<script defer src="../assets/store.js"></script>
+<script defer src="../assets/shell.js"></script>
+<script defer src="../assets/checkout.js"></script>
+<script defer src="../assets/order.js"></script>
+<link rel="stylesheet" href="../assets/motion.css">
+<script src="../assets/motion.js"></script>
+</head>
+<body data-root="../" data-page="track.html">
+<div data-shell="header"></div>
+<main id="main"><section class="wrap cart-page" data-track-page aria-labelledby="tr-title">
+  <nav class="crumbs" aria-label="Сайттағы жол"><a href="index.html">Басты бет</a><span aria-hidden="true">/</span><span>Тапсырыс күйі</span></nav>
+  <div class="cart-head"><h1 id="tr-title">Тапсырыс күйі</h1></div>
+
+  <div class="split tr-split">
+    <form class="form-card tr-form" id="tr-form" novalidate>
+      <h2>Тапсырысты табу</h2>
+      <div class="field"><label for="tr-no">Тапсырыс нөмірі</label>
+        <input class="input" id="tr-no" aria-required="true" name="no" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" placeholder="VX-000000" aria-describedby="tr-no-hint tr-no-err">
+        <p class="field-hint" id="tr-no-hint">VX- кейінгі алты цифр. Тек цифрларды жазуға болады.</p>
+        <p class="field-error" id="tr-no-err"></p></div>
+      <div class="field"><label for="tr-phone">Телефон</label>
+        <input class="input" id="tr-phone" aria-required="true" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 700 000 00 00" maxlength="20" aria-describedby="tr-phone-hint tr-phone-err">
+        <p class="field-hint" id="tr-phone-hint">Рәсімдеу кезінде көрсеткен нөмір.</p>
+        <p class="field-error" id="tr-phone-err"></p></div>
+      <div class="notice notice-error" id="tr-miss" role="alert" hidden></div>
+      <div class="form-actions"><button class="btn btn-secondary" type="submit">Күйін көрсету</button></div>
+    </form>
+    <div class="tr-help">
+      <p><strong>Нөмір қайда.</strong> Рәсімдегеннен кейін бірден «Тапсырыс қабылданды» бетінде. Менеджер оны телефонда да айтады.</p>
+      <p><strong>Тапсырыс сілтемесі.</strong> order.html?no=VX-… түріндегі сілтемені сақтасаңыз, соны ашыңыз: күйі іздеусіз көрінеді.</p>
+      <p><strong>Нөмір жоғалды.</strong> [+7 700 000 00 00] нөміріне қоңырау шалыңыз немесе телефон нөмірімен <a href="account.html">кабинетке кіріңіз</a>: онда барлық тапсырысыңыз бар.</p>
+    </div>
+  </div>
+
+  <section class="tr-mine" data-tr-mine hidden aria-labelledby="tr-mine-title">
+    <h2 class="section-title" id="tr-mine-title">Сіздің тапсырыстарыңыз</h2>
+    <ul class="order-list" data-tr-list></ul>
+  </section>
+</section></main>
+<div data-shell="footer"></div>
+</body></html>

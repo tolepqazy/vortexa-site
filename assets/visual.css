@@ -1,0 +1,102 @@
+/* Страница товара: главы, факты, гиды. Цвета — токены из site.css. */
+.vx-icon { width: 1.4rem; height: 1.4rem; flex: 0 0 auto; }
+.vx-primary,.vx-text,.context-action { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; min-height: 2.8rem; font-size: var(--fs-body); font-weight: 500; line-height: 1.2; }
+.vx-primary { color: inherit; min-height: 44px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .34em; text-decoration-color: var(--line-strong); }
+.vx-primary:hover { text-decoration-color: currentColor; }
+.vx-primary .vx-icon,.vx-text .vx-icon { width: 1.05rem; height: 1.05rem; }
+.vx-text:hover,.context-action:hover { color: var(--ink); text-decoration-color: currentColor; }
+/* Product covers and the three specifications most useful at first glance. */
+.product-story { --tone: var(--dark-2); --tone-pale: var(--surface); color: var(--ink); background: var(--bg); }
+.model-nav { color: var(--ink); background: rgba(254,254,255,0.96); border-color: var(--line); }
+.model-menu a { font-size: var(--fs-body); }
+.model-menu > div { background: white; }
+.model-links a[aria-current=location] { color: var(--ink); border-bottom-color: var(--ink); }
+.context-action { margin-top: .45rem; font-weight: 400; font-size: var(--fs-body); color: var(--muted); }
+.context-action svg { width: 1.05rem; height: 1.05rem; }
+.vx-facts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); padding-block: var(--s-40); background: var(--bg); }
+.vx-facts > div { display: flex; align-items: center; gap: clamp(.65rem,1.45vw,1.8rem); padding-left: clamp(1rem,2.5vw,3rem); border-left: 1px solid var(--line); min-width: 0; }
+.vx-facts > div:first-child { border: none; padding-left: 0; }
+.vx-facts .vx-icon { color: var(--ink); width: clamp(1.65rem,2.45vw,2.75rem); height: clamp(1.65rem,2.45vw,2.75rem); }
+.vx-facts > div > div { display: flex; flex-direction: column-reverse; min-width: 0; }
+.vx-facts dd { font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -.045em; }
+.vx-facts dt { font-size: var(--fs-body); line-height: 1.3; color: var(--muted); margin-top: .3rem; }
+/* Supporting photographs alternate with short practical explanations. */
+.intake-study { max-width: var(--width); margin: auto; display: grid; grid-template-columns: var(--cols-2); column-gap: var(--cols-gap); background: var(--surface); align-items: center; }
+.intake-copy { padding: clamp(2rem,5vw,6rem); }
+.intake-copy h2 { font-size: var(--fs-h2); letter-spacing: -.045em; line-height: 1.04; margin: .25em 0; text-wrap: balance; }
+.intake-copy > p:last-child { font-size: var(--fs-body); line-height: 1.4; max-width: 32ch; color: var(--muted); }
+.intake-study figure { height: clamp(18rem,31vw,37rem); overflow: hidden; }
+.intake-study figure img { height: 100%; object-fit: cover; object-position: 72% center; }
+.attachment-panel,.control-chapter,.pd-select,.evening-section,.room-calculator,.vacuum-choice { background: var(--surface); color: var(--ink); }
+.magnet-chapter,.styling-chapter { background: var(--dark-2); color: var(--on-dark); }
+.magnet-copy .pd-lead,.styling-intro .pd-lead { color: var(--on-dark-muted); }
+.chooser-chapter,.water-section { background: var(--dark-2); color: var(--on-dark); }
+.water-inner .pd-overline,.water-inner .pd-lead,.water-label,.explore-panel p,.process-rows p { color: var(--on-dark-muted); }
+.chooser-controls .tab-line button,.water-tool .tab-line button { border-color: var(--line-strong); color: var(--on-dark); }
+.chooser-controls .tab-line button[aria-selected=true],.water-tool .tab-line button[aria-selected=true] { color: var(--ink); background: var(--surface); border-color: var(--surface); }
+.water-line { background: var(--on-dark-line); }
+.water-line i,.amount-track div { background: var(--on-dark); }
+.explore-panel h3 { display: flex; align-items: center; gap: .46em; }
+.explore-panel h3 svg { width: .74em; height: .74em; color: var(--on-dark-muted); }
+.kit-copy li { display: flex; align-items: center; gap: .8rem; }
+.kit-copy li .vx-icon { color: var(--ink); }
+.buyer-guide { background: var(--bg); }
+.guide-intro,.guide-entries { display: block; }
+.guide-content { display: grid; grid-template-columns: var(--cols-2); gap: var(--cols-gap); }
+.guide-entries { margin: 0; }
+.guide-entries > div { padding: 0; border-top: 1px solid var(--line); }
+.guide-entries > div:last-child { border-bottom: 1px solid var(--line); }
+.case summary,.process-rows summary,.spec-disclosure summary { display: flex; align-items: center; gap: 1rem; cursor: pointer; list-style: none; padding: 1.15rem 0; }
+.case summary,.process-rows summary { font-size: var(--fs-h3); line-height: 1.25; }
+.case summary::after,.process-rows summary::after,.spec-disclosure summary::after { content: '+'; margin-left: auto; font-size: var(--fs-h3); line-height: 1; font-weight: 400; }
+.case[open] summary::after,.process-rows details[open] summary::after,.spec-disclosure[open] summary::after { content: '−'; }
+.case summary::-webkit-details-marker,.process-rows summary::-webkit-details-marker,.spec-disclosure summary::-webkit-details-marker { display: none; }
+.case summary svg,.spec-intro .vx-icon { color: var(--ink); }
+.case p,.process-rows details p { padding: 0 1.5rem 1.2rem 2.45rem; }
+.case p { color: var(--muted); }
+.illustrated-guide { display: grid; grid-template-columns: var(--cols-2); align-items: center; gap: var(--cols-gap); }
+.illustrated-guide .guide-content { display: block; }
+.illustrated-guide .guide-entries { margin-top: 1.5rem; }
+.guide-photo { overflow: hidden; }
+.guide-photo img { aspect-ratio: 1.4; object-fit: cover; object-position: right center; }   /* лицо модели у правого края исходника — показываем край целиком */
+.process-rows { list-style: none; padding: 0; }
+.process-rows li { padding: 0; }
+.process-rows summary svg { color: var(--on-dark-muted); }
+.spec-intro > .vx-icon { margin-bottom: .7rem; }
+.spec-disclosure { align-self: start; border-block: 1px solid var(--line); }
+.spec-disclosure summary { font-size: var(--fs-h3); }
+.spec-disclosure summary span { font-size: var(--fs-body); color: var(--muted); }
+.pd-table dt,.order-copy .availability,.quote-content textarea,.cmp-card p,.story-excerpt { color: var(--muted); }
+.quote-content,.room-fields input { background: var(--bg); color: var(--ink); border-color: var(--line-strong); }
+.room-answer,.question-list details,.buyer-questions,.pd-table>div { border-color: var(--line); }
+.room-fields input[aria-invalid=true] { border-color: var(--danger); }
+.control-pin[aria-pressed=true]::before { background: var(--muted); border-color: var(--surface); }
+.question-list details p,.question-list summary::after { color: var(--muted); }
+.tab-line button { color: var(--ink); border-color: var(--line-strong); }
+.tab-line button[aria-selected=true] { background: var(--ink); color: white; border-color: var(--ink); }
+.tab-line button:hover:not([aria-selected=true]) { background: var(--surface); }
+@media(max-width:760px) {
+  .home-actions,.cover-actions { margin-top: 1rem; }
+  .vx-facts { padding-block: var(--s-24); }
+  .vx-facts > div { flex-direction: column; align-items: flex-start; gap: .55rem; padding-inline: .6rem .35rem; }
+  .vx-facts dt { font-size: var(--fs-small); }
+  .vx-facts dd { font-size: var(--fs-body); overflow-wrap: anywhere; }
+  .vx-facts .vx-icon { width: 1.35rem; height: 1.35rem; }
+  .guide-content,.illustrated-guide,.intake-study { grid-template-columns: 1fr; gap: 1.6rem; }
+  .intake-study { gap: 0; }
+  .intake-copy { padding: 2.5rem var(--gutter) 1.25rem; }
+  .intake-study figure { height: auto; aspect-ratio: 1.85; }
+  .intake-study figure img { height: 100%; }
+  .guide-intro .pd-heading { max-width: 25ch; }
+  .guide-photo img { aspect-ratio: 1.65; }
+}
+@media(max-width:440px) {
+  .vx-facts > div { padding-left: .5rem; }
+  .vx-primary,.vx-text { font-size: var(--fs-body); }
+  .cover-actions,.home-actions { gap: .35rem .95rem; }
+}
+.vx-facts dt { overflow-wrap: anywhere; }
+.guide-content > *, .illustrated-guide .guide-content { min-width: 0; }
+.guide-intro .pd-heading { hyphens: auto; overflow-wrap: anywhere; }
+
+.chapter-anchor { display: block; height: 0; }

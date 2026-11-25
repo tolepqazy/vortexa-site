@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Вход — кабинет Vortexa</title>
+<meta name="description" content="Вход в кабинет сотрудников Vortexa.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#111214">
+<link rel="icon" type="image/png" href="../assets/mark.png">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/ui.css">
+<link rel="stylesheet" href="../assets/staff.css">
+<script defer src="../assets/store.js"></script>
+<script defer src="../assets/staff.js"></script>
+<script defer src="login.js"></script>
+<link rel="stylesheet" href="../assets/motion.css">
+<script src="../assets/motion.js"></script>
+</head>
+<body data-root="../" data-sx-page="login">
+<div class="sx-login">
+  <header class="sx-top">
+    <a class="sx-brand" href="../index.html" aria-label="Vortexa — на сайт"><img src="../assets/wordmark.svg" alt="Vortexa" width="104" height="16"><span>Кабинет</span></a>
+    <div class="sx-top-end"><a class="sx-toplink" href="../index.html">На сайт</a></div>
+  </header>
+  <main id="main" class="sx-login-main">
+    <form class="sx-login-box" id="login" novalidate>
+      <h1 class="sx-title">Вход для сотрудников</h1>
+      <p class="sx-sub">Выберите, под кем войти. От роли зависят разделы и то, какие заказы видны.</p>
+      <p class="notice" id="already" hidden></p>
+      <fieldset style="border:0;margin:0;padding:0;min-width:0">
+        <legend class="sr-only">Сотрудник</legend>
+        <ul class="sx-people" id="people"></ul>
+      </fieldset>
+      <button class="sx-primary" type="submit"><span>Войти</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-5-5 5 5-5 5"/></svg></button>
+      <p class="sx-demo">Демо-вход: пароль не нужен. В рабочей версии — почта, пароль и второй шаг входа. Имена сотрудников придуманы.</p>
+    </form>
+    <section class="sx-login-side" id="sx-side" aria-labelledby="sx-side-title" hidden>
+      <h2 class="sx-side-title" id="sx-side-title">Сейчас в демо</h2>
+      <dl class="sx-side-rows" id="sx-side-now"></dl>
+      <h2 class="sx-side-title">Кто какой ролью входит</h2>
+      <dl class="sx-side-rows" id="sx-side-roles"></dl>
+    </section>
+  </main>
+</div>
+</body></html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="kk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Жеке кабинет — Vortexa</title>
+<meta name="description" content="Телефон нөмірі арқылы кіру: тапсырыстар, жеткізу мекенжайлары, Vortexa техникасының кепілдігі.">
+<meta name="theme-color" content="#111214">
+<link rel="alternate" hreflang="ru" href="../account.html"><link rel="alternate" hreflang="kk" href="account.html">
+<link rel="icon" type="image/png" href="../assets/mark.png">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/ui.css">
+<link rel="stylesheet" href="../assets/account.css">
+<script defer src="../assets/store.js"></script>
+<script defer src="../assets/shell.js"></script>
+<script defer src="../assets/account.js"></script>
+<link rel="stylesheet" href="../assets/motion.css">
+<script src="../assets/motion.js"></script>
+</head>
+<body data-root="../" data-page="account.html">
+<div data-shell="header"></div>
+<main id="main" class="wrap page account" data-account>
+  <nav class="crumbs" aria-label="Сайттағы жол"><a href="index.html">Басты бет</a><span aria-hidden="true">/</span><span>Жеке кабинет</span></nav>
+
+  <!-- Кіру: телефон → код -->
+  <section class="acc-login" id="acc-login" aria-labelledby="login-title" hidden>
+    <div class="acc-login-main">
+      <header class="page-head">
+        <h1 class="page-title" id="login-title">Жеке кабинет</h1>
+        <p class="page-lead">Телефон нөмірі арқылы кіру. Ішінде тапсырыстар, жеткізу мекенжайлары және техникаңыздың кепілдігі.</p>
+      </header>
+
+      <form class="form-card acc-auth" id="form-phone" novalidate>
+        <h2>Кіру немесе тіркелу</h2>
+        <div class="field">
+          <label for="login-phone">Телефон нөмірі</label>
+          <input class="input acc-phone" id="login-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 700 000 00 00" aria-describedby="login-phone-hint login-phone-err" required>
+          <p class="field-hint" id="login-phone-hint">Кодты SMS арқылы жібереміз. Нөмір жүйеде әлі жоқ болса, кабинет алғаш кіргенде ашылады.</p>
+          <p class="field-error" id="login-phone-err"></p>
+        </div>
+        <button class="btn btn-buy btn-block" type="submit"><span>Код алу</span><svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-5-5 5 5-5 5"/></svg></button>
+      </form>
+
+      <form class="form-card acc-auth" id="form-code" novalidate hidden>
+        <h2>SMS-тегі код</h2>
+        <p class="acc-sent">Код <strong data-sent-phone></strong> нөміріне жіберілді. <button class="btn-text" type="button" data-act="change-phone">Нөмірді өзгерту</button></p>
+        <div class="field">
+          <label for="login-code">Код</label>
+          <input class="input acc-code" id="login-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="4" pattern="[0-9]*" aria-describedby="login-code-hint login-code-err" required>
+          <p class="field-hint" id="login-code-hint">Бұл демо: SMS келмейді, код әрқашан [0000].</p>
+          <p class="field-error" id="login-code-err"></p>
+        </div>
+        <button class="btn btn-buy btn-block" type="submit"><span>Кіру</span><svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-5-5 5 5-5 5"/></svg></button>
+        <button class="btn-text acc-resend" type="button" data-act="resend" disabled></button>
+      </form>
+    </div>
+    <figure class="acc-login-photo">
+      <img src="../assets/sales/t2215-evening-lg.webp" srcset="../assets/sales/t2215-evening-sm.webp 720w, ../assets/sales/t2215-evening-lg.webp 1440w" sizes="(max-width: 860px) 100vw, 50vw" width="1440" height="960" alt="Кешкі жатын бөлме: тумбадағы T-2215 ылғалдандырғышы, төсектегі адам пультті ұстап отыр" decoding="async">
+    </figure>
+  </section>
+
+  <!-- Кабинет -->
+  <section class="acc-app" id="acc-app" aria-labelledby="acc-title" hidden>
+    <header class="acc-head">
+      <div class="acc-who">
+        <h1 class="page-title" id="acc-title" tabindex="-1">Жеке кабинет</h1>
+        <p class="page-lead" data-user-phone></p>
+      </div>
+      <button class="btn-text acc-logout" type="button" data-act="logout">Шығу</button>
+    </header>
+
+    <div class="notice acc-welcome" id="acc-welcome" role="status" hidden></div>
+
+    <nav class="tabs acc-tabs" role="tablist" aria-label="Кабинет бөлімдері">
+      <a href="#orders" role="tab" id="tab-orders" aria-controls="panel-orders">Тапсырыстарым</a>
+      <a href="#addresses" role="tab" id="tab-addresses" aria-controls="panel-addresses">Мекенжайлар</a>
+      <a href="#devices" role="tab" id="tab-devices" aria-controls="panel-devices">Техникам және кепілдік</a>
+      <a href="#profile" role="tab" id="tab-profile" aria-controls="panel-profile">Профиль</a>
+    </nav>
+
+    <!-- Тапсырыстар -->
+    <div class="acc-panel" id="panel-orders" role="tabpanel" aria-labelledby="tab-orders" tabindex="-1" hidden>
+      <p class="acc-panel-lead" data-orders-lead></p>
+      <ul class="acc-orders" id="orders-list"></ul>
+      <div class="empty" id="orders-empty" hidden>
+        <h2>Әзірге тапсырыс жоқ</h2>
+        <p data-orders-empty-text>Нөміріңізбен рәсімделген тапсырыстар осында шығады.</p>
+        <a class="btn btn-secondary" href="index.html#catalog">Каталогқа өту</a>
+      </div>
+    </div>
+
+    <!-- Мекенжайлар -->
+    <div class="acc-panel" id="panel-addresses" role="tabpanel" aria-labelledby="tab-addresses" tabindex="-1" hidden>
+      <div class="split">
+        <div class="acc-col">
+          <p class="acc-panel-lead">Негізгі мекенжай тізімде бірінші тұрады.</p>
+          <ul class="acc-list" id="addr-list"></ul>
+          <p class="acc-none" id="addr-empty" hidden>Әзірге мекенжай жоқ. Алғашқы қосылғаны негізгі болады.</p>
+          <div class="notice acc-undo" id="addr-undo" role="status" hidden></div>
+        </div>
+        <form class="form-card" id="form-address" novalidate>
+          <h2>Жаңа мекенжай</h2>
+          <div class="field">
+            <label for="addr-city">Қала</label>
+            <input class="input" id="addr-city" name="city" list="addr-cities" autocomplete="address-level2" aria-describedby="addr-city-err" required>
+            <datalist id="addr-cities"><option value="Алматы"><option value="Астана"><option value="Шымкент"><option value="Қарағанды"><option value="Ақтөбе"><option value="Атырау"><option value="Павлодар"><option value="Өскемен"><option value="Қостанай"><option value="Тараз"></datalist>
+            <p class="field-error" id="addr-city-err"></p>
+          </div>
+          <div class="field">
+            <label for="addr-street">Көше</label>
+            <input class="input" id="addr-street" name="street" autocomplete="address-line1" aria-describedby="addr-street-err" required>
+            <p class="field-error" id="addr-street-err"></p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="addr-house">Үй</label>
+              <input class="input" id="addr-house" name="house" aria-describedby="addr-house-err" required>
+              <p class="field-error" id="addr-house-err"></p>
+            </div>
+            <div class="field">
+              <label for="addr-flat">Пәтер немесе кеңсе</label>
+              <input class="input" id="addr-flat" name="flat" autocomplete="address-line2">
+            </div>
+          </div>
+          <div class="field">
+            <label for="addr-comment">Курьерге түсініктеме</label>
+            <textarea class="textarea acc-textarea" id="addr-comment" name="comment" aria-describedby="addr-comment-hint"></textarea>
+            <p class="field-hint" id="addr-comment-hint">Кіреберіс, қабат, домофон коды.</p>
+          </div>
+          <div class="form-actions"><button class="btn btn-secondary" type="submit">Мекенжай қосу</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Техникам және кепілдік -->
+    <div class="acc-panel" id="panel-devices" role="tabpanel" aria-labelledby="tab-devices" tabindex="-1" hidden>
+      <section class="acc-offer" id="dev-offer" aria-labelledby="dev-offer-title" hidden>
+        <h2 class="acc-subtitle" id="dev-offer-title">Жеткізілген тапсырыстардан</h2>
+        <p class="muted">Бұл модельдерді алдыңыз, бірақ әлі қоспадыңыз. Сатып алған күн тапсырыстан алынады.</p>
+        <ul class="acc-offer-list" id="dev-offer-list"></ul>
+      </section>
+      <div class="split">
+        <div class="acc-col">
+          <p class="acc-panel-lead">Әр модельге кепілдік сатып алған күннен бастап <span data-term="warranty">[12 ай]</span>.</p>
+          <ul class="acc-devices" id="dev-list"></ul>
+          <p class="acc-none" id="dev-empty" hidden>Мұнда сіздің техникаңыз болады: кепілдік мерзімі, нұсқаулық және сервиспен байланыс.</p>
+          <div class="notice acc-undo" id="dev-undo" role="status" hidden></div>
+        </div>
+        <form class="form-card" id="form-device" novalidate>
+          <h2>Техниканы тіркеу</h2>
+          <div class="field">
+            <label for="dev-model">Модель</label>
+            <select class="select" id="dev-model" name="model" aria-describedby="dev-model-err" required></select>
+            <p class="field-error" id="dev-model-err"></p>
+          </div>
+          <div class="field">
+            <label for="dev-serial">Сериялық нөмір</label>
+            <input class="input acc-serial" id="dev-serial" name="serial" autocapitalize="characters" spellcheck="false" aria-describedby="dev-serial-hint dev-serial-err" required>
+            <p class="field-hint" id="dev-serial-hint">Корпустағы немесе қораптағы жапсырмадағы нөмір.</p>
+            <p class="field-error" id="dev-serial-err"></p>
+          </div>
+          <div class="field">
+            <label for="dev-date">Сатып алған күн</label>
+            <input class="input" id="dev-date" name="date" type="date" aria-describedby="dev-date-err" required>
+            <p class="field-error" id="dev-date-err"></p>
+          </div>
+          <div class="form-actions"><button class="btn btn-secondary" type="submit">Тіркеу</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Профиль -->
+    <div class="acc-panel" id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" tabindex="-1" hidden>
+      <form class="form-card acc-profile" id="form-profile" novalidate>
+        <h2>Сіздің деректеріңіз</h2>
+        <div class="field">
+          <label for="pf-name">Аты</label>
+          <input class="input" id="pf-name" name="name" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label for="pf-phone">Телефон</label>
+          <input class="input acc-readonly" id="pf-phone" name="phone" readonly aria-describedby="pf-phone-hint">
+          <p class="field-hint" id="pf-phone-hint">Кабинетке осы нөмір арқылы кіресіз. Оны <a class="acc-inline" href="support.html">қолдау қызметі</a> арқылы ауыстыруға болады.</p>
+        </div>
+        <div class="field">
+          <label for="pf-email">Пошта</label>
+          <input class="input" id="pf-email" name="email" type="email" inputmode="email" autocomplete="email" aria-describedby="pf-email-err">
+          <p class="field-error" id="pf-email-err"></p>
+        </div>
+        <fieldset class="acc-fieldset">
+          <legend class="field-label">Хаттар мен SMS тілі</legend>
+          <div class="acc-langs">
+            <label class="radio"><input type="radio" name="lang" value="ru"><span>Русский</span></label>
+            <label class="radio"><input type="radio" name="lang" value="kk"><span>Қазақша</span></label>
+          </div>
+        </fieldset>
+        <label class="check"><input type="checkbox" name="news" id="pf-news"><span>Vortexa жаңалықтары мен ұсыныстарын поштаға жіберу<small>Айына [екі хаттан] артық емес. Жазылымнан осы жерде бас тартуға болады.</small></span></label>
+        <div class="form-actions"><button class="btn btn-secondary" type="submit">Сақтау</button></div>
+        <div class="notice notice-ok acc-saved" id="pf-saved" role="status" hidden></div>
+      </form>
+    </div>
+  </section>
+
+  <noscript><p class="muted">Жеке кабинет JavaScript қосулы болғанда жұмыс істейді.</p></noscript>
+</main>
+<div data-shell="footer"></div>
+</body></html>

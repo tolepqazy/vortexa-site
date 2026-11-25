@@ -1,0 +1,256 @@
+/*
+ * Vortexa v7 — общий слой движения. Подключается последним стилем на всех страницах.
+ * Правила: тихо и точно; движение объясняет действие или смену состояния.
+ * Только transform / opacity / clip-path (исключения: подсветка строки и высота раскрывашки — по действию пользователя).
+ * Без JS всё видно сразу: скрытие до появления включает motion.js классом .mo на <html> и только ниже первого экрана.
+ * prefers-reduced-motion: reduce — движение выключено, состояния меняются мгновенно.
+ */
+:root {
+  --mo-micro: 160ms;                       /* кнопки, иконки, поля */
+  --mo-mini: 260ms;                        /* вкладки, раскрывашки, меню, шапка */
+  --mo-macro: 640ms;                       /* появление блоков, вступление */
+  --mo-ease: cubic-bezier(.2, .7, .2, 1);  /* вход и всё остальное */
+  --mo-exit: cubic-bezier(.4, 0, 1, 1);    /* выход */
+  --mo-rise: 20px;
+  --mo-step: 70ms;                         /* лесенка в группе */
+}
+
+/* ================= Переходы между страницами ================= */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: mo-vt-out 160ms var(--mo-exit) both; }
+::view-transition-new(root) { animation: mo-vt-in 280ms var(--mo-ease) both; }
+@keyframes mo-vt-out { to { opacity: 0; } }
+@keyframes mo-vt-in { from { opacity: 0; } }
+/* Шапка не мигает: она одна и та же на обеих страницах */
+.site-header { view-transition-name: mo-header; }
+.sx-top { view-transition-name: mo-staff-top; }
+::view-transition-group(mo-header), ::view-transition-group(mo-staff-top) { animation-duration: 0s; }
+::view-transition-old(mo-header), ::view-transition-new(mo-header),
+::view-transition-old(mo-staff-top), ::view-transition-new(mo-staff-top) { animation: none; }
+::view-transition-old(mo-header), ::view-transition-old(mo-staff-top) { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ================= Микро ================= */
+
+  /* Кнопки: лёгкое нажатие, стрелка уходит вперёд */
+  .btn, .button, .tab-line button, .sx-seg button { transition: background-color var(--mo-micro) var(--mo-ease), color var(--mo-micro) var(--mo-ease),
+    border-color var(--mo-micro) var(--mo-ease), transform var(--mo-micro) var(--mo-ease), opacity var(--mo-micro) var(--mo-ease); }
+  .btn:active:not(:disabled), .button:active, .tab-line button:active { transform: scale(.98); transition-duration: 90ms; }
+  .btn .arrow, .button svg, .link-line svg { transition: transform var(--mo-mini) var(--mo-ease); }
+  .btn:hover .arrow, .btn:focus-visible .arrow, .button:hover svg, .link-line:hover svg { transform: translateX(4px); }
+
+  /* «Купить» после добавления: стрелка уступает место галочке на секунду */
+  .btn-buy { position: relative; }
+  .btn-buy .arrow { transition: transform var(--mo-mini) var(--mo-ease), opacity var(--mo-micro) var(--mo-ease); }
+  .btn-buy.mo-added .arrow { opacity: 0; transform: translateX(8px); }
+  .btn-buy::after { content: ""; position: absolute; top: 50%; right: calc(var(--s-24) + .3rem); width: .45rem; height: .85rem; margin-top: -.55rem;
+    border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg); opacity: 0; pointer-events: none; }
+  .btn-sm.btn-buy::after { right: calc(var(--s-16) + .3rem); }
+  .btn-buy.mo-added::after { opacity: 1; animation: mo-tick 320ms var(--mo-ease) both; }
+  @keyframes mo-tick {
+    0% { clip-path: inset(100% 100% 0 0); }
+    45% { clip-path: inset(calc(100% - 2px) 0 0 0); }
+    100% { clip-path: inset(0 0 0 0); }
+  }
+
+  /* Иконки шапки: мягкая смена прозрачности */
+  .icon-btn, .cart-link, .film-toggle, .film-expand, .zoom-btn { transition: opacity var(--mo-micro) var(--mo-ease), transform var(--mo-micro) var(--mo-ease); }
+  .icon-btn:active, .cart-link:active { transform: scale(.94); }
+
+  /* Счётчик корзины: один короткий толчок при добавлении (класс .bump ставит shell.js) */
+  .cart-count.bump { animation: mo-bump 360ms var(--mo-ease); }
+  @keyframes mo-bump { 0% { transform: scale(1); } 40% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+  /* Поля: рамка проявляется, а не щёлкает */
+  .input, .select, .textarea { outline: 2px solid transparent; outline-offset: -1px;
+    transition: outline-color var(--mo-micro) var(--mo-ease), border-color var(--mo-micro) var(--mo-ease); }
+  .field > label { transition: transform var(--mo-mini) var(--mo-ease); }
+  .field:focus-within > label { transform: translateX(2px); }
+  .field-error:not(:empty) { animation: mo-pop var(--mo-mini) var(--mo-ease); }
+
+  /* Сообщения на странице: «Скопировано», «Сохранено», ошибки */
+  .mo-pop { animation: mo-pop var(--mo-mini) var(--mo-ease); }
+  @keyframes mo-pop { from { opacity: 0; transform: translateY(-4px); } }
+  .notice { animation: mo-pop var(--mo-mini) var(--mo-ease); }
+
+  /* Уведомления внизу: въезд мягкий, уход быстрый */
+  .toast, .sx-toast { transition: opacity 160ms var(--mo-exit), transform 160ms var(--mo-exit); }
+  .toast.show, .sx-toast.is-shown { transition: opacity var(--mo-mini) var(--mo-ease), transform var(--mo-mini) var(--mo-ease); }
+
+  /* ================= Мини ================= */
+
+  /* Карточки каталога: фото приближается внутри рамки, подпись смещается */
+  .card-plate img, .pick-photo img, .search-thumb img { transition: transform var(--mo-macro) var(--mo-ease); }
+  .card-caption h3, .card-caption .card-model { transition: transform var(--mo-mini) var(--mo-ease); }
+  @media (hover: hover) {
+    .card-plate:hover img, .product-card:hover .card-plate img { transform: scale(1.035); }
+    .product-card:hover .card-caption h3, .product-card:hover .card-caption .card-model { transform: translateX(4px); }
+    .pick-photo:hover img, a:hover > .pick-photo img { transform: scale(1.035); }
+    .search-row:hover .search-thumb img { transform: scale(1.04); }
+  }
+  .search-row { transition: background-color var(--mo-micro) var(--mo-ease); }
+
+  /* Вкладки и фильтры: одна линия переезжает под активный пункт (рисует motion.js) */
+  .mo-tabs { position: relative; }
+  .mo-tabs > .mo-ind { position: absolute; left: 0; bottom: -1px; width: 1px; height: 2px; background: currentColor; color: var(--ink);
+    transform-origin: 0 50%; pointer-events: none; transition: transform var(--mo-mini) var(--mo-ease); }
+  .mo-tabs.mo-ind-ready > :is(a, button) { border-bottom-color: transparent !important; }
+  .mo-tabs > .mo-ind.mo-no-anim { transition: none; }
+
+  /* Раскрывашки: плавная высота и поворот «+» */
+  :root { interpolate-size: allow-keywords; }
+  .question-list details::details-content, .faq details::details-content, .spec-disclosure::details-content,
+  .guide-entries details::details-content, details.case::details-content, .acc-panel details::details-content {
+    block-size: 0; overflow: clip;
+    transition: block-size var(--mo-mini) var(--mo-ease), content-visibility var(--mo-mini) allow-discrete; }
+  .question-list details[open]::details-content, .faq details[open]::details-content, .spec-disclosure[open]::details-content,
+  .guide-entries details[open]::details-content, details.case[open]::details-content, .acc-panel details[open]::details-content { block-size: auto; }
+  .question-list summary::after { transition: transform var(--mo-mini) var(--mo-ease); }
+  .question-list details[open] summary::after { content: "+"; transform: rotate(45deg); }
+  .model-menu summary i { transition: transform var(--mo-mini) var(--mo-ease); }
+
+  /* Меню, поиск, выпадающие: короткий сдвиг при появлении */
+  .search-dialog[open], .menu-dialog[open], .zoom-dialog[open], .film-dialog[open] { animation: mo-drop var(--mo-mini) var(--mo-ease); }
+  dialog[open]::backdrop { animation: mo-fade var(--mo-mini) var(--mo-ease); }
+  .model-menu[open] > div, .sx-drop.is-open { animation: mo-drop var(--mo-mini) var(--mo-ease); }
+  @keyframes mo-drop { from { opacity: 0; transform: translateY(-8px); } }
+  @keyframes mo-fade { from { opacity: 0; } }
+  .search-results .search-row { animation: mo-fade var(--mo-micro) var(--mo-ease); }
+
+  /* Шапка: на длинных страницах прячется при прокрутке вниз и возвращается при прокрутке вверх (класс ставит motion.js) */
+  .mo-head .site-header { position: sticky; top: 0; z-index: 8;
+    transition: transform var(--mo-mini) var(--mo-ease), border-color var(--mo-mini) var(--mo-ease); }
+  .mo-head .site-header.mo-away { transform: translateY(-100%); transition-timing-function: var(--mo-exit); transition-duration: 220ms; }
+  .mo-head .site-header .brand img { transform-origin: 0 50%; transition: transform var(--mo-mini) var(--mo-ease); }
+  .mo-head .site-header.mo-float .brand img { transform: scale(.92); }
+  .mo-shift { transition: translate var(--mo-mini) var(--mo-ease); }
+
+  /* Липкая плашка «Купить»: въезд снизу (ui.css), уход быстрее */
+  .buybar { transition: transform 200ms var(--mo-exit); }
+  .buybar.is-shown { transition: transform var(--mo-mini) var(--mo-ease); }
+  .model-nav.show-buy .model-buy .btn-buy { animation: mo-pop var(--mo-mini) var(--mo-ease); }
+
+  /* Строки таблиц кабинетов: подсветка при наведении и после смены статуса */
+  .sx-table tbody tr, .table tbody tr, .order-row, .acc-order { transition: background-color var(--mo-micro) var(--mo-ease); }
+  .mo-flash, .mo-flash > td { animation: mo-flash 1100ms var(--mo-ease); }
+  @keyframes mo-flash { 0%, 30% { background-color: var(--line); } 100% { background-color: transparent; } }
+  .mo-flash-badge { animation: mo-badge 360ms var(--mo-ease); }
+  @keyframes mo-badge { from { opacity: .3; transform: scale(.92); } }
+
+  /* Шаги оформления: номер заливается снизу, когда раздел заполнен */
+  .co-num { position: relative; isolation: isolate; }
+  .co-num::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ink);
+    clip-path: inset(100% 0 0 0); transition: clip-path var(--mo-mini) var(--mo-ease); }
+  .co-part.is-filled .co-num { background: transparent; }
+  .co-part.is-filled .co-num::before { clip-path: inset(0); }
+  .steps li::before { transition: background-color var(--mo-mini) var(--mo-ease), color var(--mo-mini) var(--mo-ease); }
+
+  /* Срок гарантии в кабинете: полоса заполняется один раз */
+  .acc-w-bar span { transform-origin: 0 50%; animation: mo-fill 900ms var(--mo-ease) 120ms backwards; }
+  @keyframes mo-fill { from { transform: scaleX(0); } }
+
+  /* Ссылки: подчёркивание прорисовывается слева */
+  .main-nav a, .foot-col li a, .crumbs a, .model-links a, .footer-base .staff-link { position: relative; }
+  .main-nav a::after, .foot-col li a::after, .crumbs a::after, .footer-base .staff-link::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 1px; background: currentColor;
+    bottom: calc(50% - .5lh - .05em); transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform var(--mo-mini) var(--mo-ease); pointer-events: none; }
+  .main-nav a:hover, .foot-col a:hover, .crumbs a:hover { text-decoration: none; }
+  .main-nav a:hover::after, .foot-col li a:hover::after, .crumbs a:hover::after, .footer-base .staff-link:hover::after,
+  .main-nav a:focus-visible::after, .foot-col li a:focus-visible::after { transform: scaleX(1); }
+  /* Ссылки с постоянной линией: тонкая серая линия на месте, тёмная прорисовывается поверх */
+  .link-line, .btn-text { position: relative; text-decoration: none; }
+  .link-line::before, .btn-text::before, .link-line::after, .btn-text::after { content: ""; position: absolute; left: 0; right: 0; height: 1px;
+    bottom: calc(50% - .5lh - .02em); pointer-events: none; }
+  .link-line::before, .btn-text::before { background: var(--line-strong); }
+  .link-line::after, .btn-text::after { background: currentColor; transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform var(--mo-mini) var(--mo-ease); }
+  .link-line:hover::after, .btn-text:hover::after, .link-line:focus-visible::after { transform: scaleX(1); }
+  .text-link { transition: text-decoration-color var(--mo-mini) var(--mo-ease); }
+  .text-link:hover { text-decoration-color: currentColor; }
+  /* Строка модели: линия под активной главой */
+  .model-links a { border-bottom-color: transparent !important; }
+  .model-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: 0 50%; transition: transform var(--mo-mini) var(--mo-ease); }
+  .model-links a:hover::after, .model-links a[aria-current="location"]::after { transform: scaleX(1); }
+
+  /* ================= Макро ================= */
+
+  /* Появление блоков при прокрутке: один раз, лесенка в группах */
+  .mo [data-mo] { transition: opacity var(--mo-macro) var(--mo-ease), transform var(--mo-macro) var(--mo-ease), clip-path 900ms var(--mo-ease);
+    transition-delay: var(--mo-d, 0ms); }
+  .mo [data-mo="rise"]:not(.mo-in) { opacity: 0; transform: translateY(var(--mo-rise)); }
+  /* Крупное фото: раскрытие маской из центра и лёгкое отдаление */
+  .mo [data-mo="mask"] { overflow: hidden; }
+  .mo [data-mo="mask"]:not(.mo-in) { clip-path: inset(6% 5% 6% 5%); }
+  .mo [data-mo="mask"] > img { transition: scale 1200ms var(--mo-ease); transition-delay: var(--mo-d, 0ms); }
+  .mo [data-mo="mask"]:not(.mo-in) > img { scale: 1.08; }
+
+  /* Параллакс крупных фото: не больше ±3% высоты кадра (translate пишет motion.js) */
+  .mo-par { overflow: hidden; }
+  .mo-par > img { scale: 1.07; will-change: translate; }
+
+  /* «Дыхание» неподвижного кадра первого экрана: 1.00 → 1.04 за 24 с, один раз */
+  .mo-breathe { overflow: hidden; }
+  .mo-breathe > img { animation: mo-breathe 24s linear both; }
+  @keyframes mo-breathe { from { scale: 1; } to { scale: 1.04; } }
+
+  /* Вступление первого экрана главной и товара: подпись, заголовок, текст, цена, кнопка, фото — по очереди */
+  .feature-copy > *, .product-cinema-copy > *, .feature-copy .buy-panel > *, .product-cinema-copy .buy-panel > * {
+    animation: mo-intro var(--mo-macro) var(--mo-ease) backwards; }
+  .feature-copy > :nth-child(1), .product-cinema-copy > :nth-child(1) { animation-delay: 40ms; }
+  .feature-copy > :nth-child(2), .product-cinema-copy > :nth-child(2) { animation-delay: 110ms; }
+  .feature-copy > :nth-child(3), .product-cinema-copy > :nth-child(3) { animation-delay: 180ms; }
+  .feature-copy > .buy-panel, .product-cinema-copy > .buy-panel { animation: none; }
+  .feature-copy .buy-panel > :nth-child(1), .product-cinema-copy .buy-panel > :nth-child(1) { animation-delay: 250ms; }
+  .feature-copy .buy-panel > :nth-child(2), .product-cinema-copy .buy-panel > :nth-child(2) { animation-delay: 320ms; }
+  .feature-copy .buy-panel > :nth-child(n+3), .product-cinema-copy .buy-panel > :nth-child(n+3) { animation-delay: 390ms; }
+  @keyframes mo-intro { from { opacity: 0; transform: translateY(16px); } }
+  .cinema-hero .feature-media, .product-cinema .product-film { animation: mo-unveil 900ms var(--mo-ease) 120ms backwards; }
+  @keyframes mo-unveil { from { clip-path: inset(0 0 0 8%); opacity: .2; } }
+  .feature-selector > * { animation: mo-fade var(--mo-macro) var(--mo-ease) 420ms backwards; }
+
+  /* Видео: смена ролика растворением, а не скачком (класс ставит motion.js) */
+  .mo-swap { animation: mo-swap 520ms var(--mo-ease); }
+  @keyframes mo-swap { from { opacity: .15; } }
+  .mo-swap-text { animation: mo-intro 420ms var(--mo-ease) backwards; }
+
+  /* Полоса прогресса по главам товара */
+  .model-nav .mo-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink);
+    transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; }
+
+  /* Цифры, которые досчитывают: ширина знаков постоянная, ничего не прыгает */
+  .mo-count { font-variant-numeric: tabular-nums; }
+
+  /* График выручки в кабинете: точки появляются после линии */
+  .mo-chart-dots .pt:not(#hover-pt), .mo-chart-dots circle:not(#hover-pt) { animation: mo-fade 400ms var(--mo-ease) 700ms backwards; }
+}
+
+/* Чекбокс и радио: рисуем сами, чтобы галочка и точка прорисовывались */
+.check input[type="checkbox"], .radio input[type="radio"] {
+  -webkit-appearance: none; appearance: none; display: grid; place-items: center; border: 1px solid var(--line-strong); background: var(--bg); color: var(--on-dark); }
+.check input[type="checkbox"]:hover, .radio input[type="radio"]:hover { border-color: var(--ink); }
+.check input[type="checkbox"]:checked { background: var(--ink); border-color: var(--ink); }
+.check input[type="checkbox"]::before { content: ""; width: .3rem; height: .6rem; margin-top: -.15rem; border: solid currentColor; border-width: 0 2px 2px 0;
+  transform: rotate(45deg); clip-path: inset(100% 100% 0 0); }
+.check input[type="checkbox"]:checked::before { clip-path: inset(0); }
+.radio input[type="radio"] { border-radius: 50%; }
+.radio input[type="radio"]:checked { border-color: var(--ink); }
+.radio input[type="radio"]::before { content: ""; width: .625rem; height: .625rem; border-radius: 50%; background: var(--ink); transform: scale(0); }
+.radio input[type="radio"]:checked::before { transform: scale(1); }
+.check input:disabled, .radio input:disabled { opacity: .45; }
+.check input:focus-visible, .radio input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .check input[type="checkbox"], .radio input[type="radio"] { transition: background-color var(--mo-micro) var(--mo-ease), border-color var(--mo-micro) var(--mo-ease); }
+  .check input[type="checkbox"]:checked::before { animation: mo-tick 260ms var(--mo-ease) 60ms backwards; }
+  .radio input[type="radio"]::before { transition: transform var(--mo-micro) var(--mo-ease); }
+  .check input:active, .radio input:active { transform: scale(.92); }
+}
+
+/* Без движения: всё видно сразу, переходы мгновенные */
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  .mo [data-mo] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .mo-par > img, .mo-breathe > img { scale: none !important; translate: none !important; }
+}

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Личный кабинет — Vortexa</title>
+<meta name="description" content="Вход по номеру телефона: заказы, адреса доставки, гарантия на технику Vortexa.">
+<meta name="theme-color" content="#111214">
+<link rel="alternate" hreflang="ru" href="account.html"><link rel="alternate" hreflang="kk" href="kk/account.html">
+<link rel="icon" type="image/png" href="assets/mark.png">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/ui.css">
+<link rel="stylesheet" href="assets/account.css">
+<script defer src="assets/store.js"></script>
+<script defer src="assets/shell.js"></script>
+<script defer src="assets/account.js"></script>
+<link rel="stylesheet" href="assets/motion.css">
+<script src="assets/motion.js"></script>
+</head>
+<body data-root="" data-page="account.html">
+<div data-shell="header"></div>
+<main id="main" class="wrap page account" data-account>
+  <nav class="crumbs" aria-label="Путь по сайту"><a href="index.html">Главная</a><span aria-hidden="true">/</span><span>Личный кабинет</span></nav>
+
+  <!-- Вход: телефон → код -->
+  <section class="acc-login" id="acc-login" aria-labelledby="login-title" hidden>
+    <div class="acc-login-main">
+      <header class="page-head">
+        <h1 class="page-title" id="login-title">Личный кабинет</h1>
+        <p class="page-lead">Вход по номеру телефона. Внутри заказы, адреса доставки и гарантия на вашу технику.</p>
+      </header>
+
+      <form class="form-card acc-auth" id="form-phone" novalidate>
+        <h2>Вход или регистрация</h2>
+        <div class="field">
+          <label for="login-phone">Номер телефона</label>
+          <input class="input acc-phone" id="login-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 700 000 00 00" aria-describedby="login-phone-hint login-phone-err" required>
+          <p class="field-hint" id="login-phone-hint">Пришлём код в SMS. Если номера ещё нет в системе, кабинет создастся при первом входе.</p>
+          <p class="field-error" id="login-phone-err"></p>
+        </div>
+        <button class="btn btn-buy btn-block" type="submit"><span>Получить код</span><svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-5-5 5 5-5 5"/></svg></button>
+      </form>
+
+      <form class="form-card acc-auth" id="form-code" novalidate hidden>
+        <h2>Код из SMS</h2>
+        <p class="acc-sent">Отправили код на <strong data-sent-phone></strong>. <button class="btn-text" type="button" data-act="change-phone">Изменить номер</button></p>
+        <div class="field">
+          <label for="login-code">Код</label>
+          <input class="input acc-code" id="login-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="4" pattern="[0-9]*" aria-describedby="login-code-hint login-code-err" required>
+          <p class="field-hint" id="login-code-hint">Это демо: SMS не приходит, код всегда [0000].</p>
+          <p class="field-error" id="login-code-err"></p>
+        </div>
+        <button class="btn btn-buy btn-block" type="submit"><span>Войти</span><svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-5-5 5 5-5 5"/></svg></button>
+        <button class="btn-text acc-resend" type="button" data-act="resend" disabled></button>
+      </form>
+    </div>
+    <figure class="acc-login-photo">
+      <img src="assets/sales/t2215-evening-lg.webp" srcset="assets/sales/t2215-evening-sm.webp 720w, assets/sales/t2215-evening-lg.webp 1440w" sizes="(max-width: 860px) 100vw, 50vw" width="1440" height="960" alt="Вечер в спальне: увлажнитель T-2215 на тумбочке, человек в кровати держит пульт" decoding="async">
+    </figure>
+  </section>
+
+  <!-- Кабинет -->
+  <section class="acc-app" id="acc-app" aria-labelledby="acc-title" hidden>
+    <header class="acc-head">
+      <div class="acc-who">
+        <h1 class="page-title" id="acc-title" tabindex="-1">Личный кабинет</h1>
+        <p class="page-lead" data-user-phone></p>
+      </div>
+      <button class="btn-text acc-logout" type="button" data-act="logout">Выйти</button>
+    </header>
+
+    <div class="notice acc-welcome" id="acc-welcome" role="status" hidden></div>
+
+    <nav class="tabs acc-tabs" role="tablist" aria-label="Разделы кабинета">
+      <a href="#orders" role="tab" id="tab-orders" aria-controls="panel-orders">Мои заказы</a>
+      <a href="#addresses" role="tab" id="tab-addresses" aria-controls="panel-addresses">Адреса</a>
+      <a href="#devices" role="tab" id="tab-devices" aria-controls="panel-devices">Мои товары и гарантия</a>
+      <a href="#profile" role="tab" id="tab-profile" aria-controls="panel-profile">Профиль</a>
+    </nav>
+
+    <!-- Заказы -->
+    <div class="acc-panel" id="panel-orders" role="tabpanel" aria-labelledby="tab-orders" tabindex="-1" hidden>
+      <p class="acc-panel-lead" data-orders-lead></p>
+      <ul class="acc-orders" id="orders-list"></ul>
+      <div class="empty" id="orders-empty" hidden>
+        <h2>Заказов пока нет</h2>
+        <p data-orders-empty-text>Здесь появятся заказы, оформленные на ваш номер.</p>
+        <a class="btn btn-secondary" href="index.html#catalog">Перейти в каталог</a>
+      </div>
+    </div>
+
+    <!-- Адреса -->
+    <div class="acc-panel" id="panel-addresses" role="tabpanel" aria-labelledby="tab-addresses" tabindex="-1" hidden>
+      <div class="split">
+        <div class="acc-col">
+          <p class="acc-panel-lead">Основной адрес стоит в списке первым.</p>
+          <ul class="acc-list" id="addr-list"></ul>
+          <p class="acc-none" id="addr-empty" hidden>Адресов пока нет. Первый добавленный станет основным.</p>
+          <div class="notice acc-undo" id="addr-undo" role="status" hidden></div>
+        </div>
+        <form class="form-card" id="form-address" novalidate>
+          <h2>Новый адрес</h2>
+          <div class="field">
+            <label for="addr-city">Город</label>
+            <input class="input" id="addr-city" name="city" list="addr-cities" autocomplete="address-level2" aria-describedby="addr-city-err" required>
+            <datalist id="addr-cities"><option value="Алматы"><option value="Астана"><option value="Шымкент"><option value="Караганда"><option value="Актобе"><option value="Атырау"><option value="Павлодар"><option value="Усть-Каменогорск"><option value="Костанай"><option value="Тараз"></datalist>
+            <p class="field-error" id="addr-city-err"></p>
+          </div>
+          <div class="field">
+            <label for="addr-street">Улица</label>
+            <input class="input" id="addr-street" name="street" autocomplete="address-line1" aria-describedby="addr-street-err" required>
+            <p class="field-error" id="addr-street-err"></p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="addr-house">Дом</label>
+              <input class="input" id="addr-house" name="house" aria-describedby="addr-house-err" required>
+              <p class="field-error" id="addr-house-err"></p>
+            </div>
+            <div class="field">
+              <label for="addr-flat">Квартира или офис</label>
+              <input class="input" id="addr-flat" name="flat" autocomplete="address-line2">
+            </div>
+          </div>
+          <div class="field">
+            <label for="addr-comment">Комментарий для курьера</label>
+            <textarea class="textarea acc-textarea" id="addr-comment" name="comment" aria-describedby="addr-comment-hint"></textarea>
+            <p class="field-hint" id="addr-comment-hint">Подъезд, этаж, код домофона.</p>
+          </div>
+          <div class="form-actions"><button class="btn btn-secondary" type="submit">Добавить адрес</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Мои товары и гарантия -->
+    <div class="acc-panel" id="panel-devices" role="tabpanel" aria-labelledby="tab-devices" tabindex="-1" hidden>
+      <section class="acc-offer" id="dev-offer" aria-labelledby="dev-offer-title" hidden>
+        <h2 class="acc-subtitle" id="dev-offer-title">Из доставленных заказов</h2>
+        <p class="muted">Эти модели вы получили, но ещё не добавили. Дата покупки возьмётся из заказа.</p>
+        <ul class="acc-offer-list" id="dev-offer-list"></ul>
+      </section>
+      <div class="split">
+        <div class="acc-col">
+          <p class="acc-panel-lead">Гарантия на каждую модель — <span data-term="warranty">[12 месяцев]</span> с даты покупки.</p>
+          <ul class="acc-devices" id="dev-list"></ul>
+          <p class="acc-none" id="dev-empty" hidden>Здесь будет ваша техника: срок гарантии, инструкция и связь с сервисом.</p>
+          <div class="notice acc-undo" id="dev-undo" role="status" hidden></div>
+        </div>
+        <form class="form-card" id="form-device" novalidate>
+          <h2>Зарегистрировать технику</h2>
+          <div class="field">
+            <label for="dev-model">Модель</label>
+            <select class="select" id="dev-model" name="model" aria-describedby="dev-model-err" required></select>
+            <p class="field-error" id="dev-model-err"></p>
+          </div>
+          <div class="field">
+            <label for="dev-serial">Серийный номер</label>
+            <input class="input acc-serial" id="dev-serial" name="serial" autocapitalize="characters" spellcheck="false" aria-describedby="dev-serial-hint dev-serial-err" required>
+            <p class="field-hint" id="dev-serial-hint">Номер с наклейки на корпусе или на коробке.</p>
+            <p class="field-error" id="dev-serial-err"></p>
+          </div>
+          <div class="field">
+            <label for="dev-date">Дата покупки</label>
+            <input class="input" id="dev-date" name="date" type="date" aria-describedby="dev-date-err" required>
+            <p class="field-error" id="dev-date-err"></p>
+          </div>
+          <div class="form-actions"><button class="btn btn-secondary" type="submit">Зарегистрировать</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Профиль -->
+    <div class="acc-panel" id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" tabindex="-1" hidden>
+      <form class="form-card acc-profile" id="form-profile" novalidate>
+        <h2>Ваши данные</h2>
+        <div class="field">
+          <label for="pf-name">Имя</label>
+          <input class="input" id="pf-name" name="name" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label for="pf-phone">Телефон</label>
+          <input class="input acc-readonly" id="pf-phone" name="phone" readonly aria-describedby="pf-phone-hint">
+          <p class="field-hint" id="pf-phone-hint">По этому номеру вы входите в кабинет. Сменить его можно через <a class="acc-inline" href="support.html">поддержку</a>.</p>
+        </div>
+        <div class="field">
+          <label for="pf-email">Почта</label>
+          <input class="input" id="pf-email" name="email" type="email" inputmode="email" autocomplete="email" aria-describedby="pf-email-err">
+          <p class="field-error" id="pf-email-err"></p>
+        </div>
+        <fieldset class="acc-fieldset">
+          <legend class="field-label">Язык писем и SMS</legend>
+          <div class="acc-langs">
+            <label class="radio"><input type="radio" name="lang" value="ru"><span>Русский</span></label>
+            <label class="radio"><input type="radio" name="lang" value="kk"><span>Қазақша</span></label>
+          </div>
+        </fieldset>
+        <label class="check"><input type="checkbox" name="news" id="pf-news"><span>Присылать новости и предложения Vortexa на почту<small>Не чаще [двух писем] в месяц. Отписаться можно здесь же.</small></span></label>
+        <div class="form-actions"><button class="btn btn-secondary" type="submit">Сохранить</button></div>
+        <div class="notice notice-ok acc-saved" id="pf-saved" role="status" hidden></div>
+      </form>
+    </div>
+  </section>
+
+  <noscript><p class="muted">Личный кабинет работает со включённым JavaScript.</p></noscript>
+</main>
+<div data-shell="footer"></div>
+</body></html>

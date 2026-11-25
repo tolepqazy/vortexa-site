@@ -1,0 +1,134 @@
+/*
+ * Vortexa v7 — личный кабинет покупателя (account.html).
+ * Только раскладка кабинета; кнопки, поля, вкладки, статусы, уведомления — из ui.css.
+ * Отступы из ряда 8/16/24/40/64/104, углы 0, без теней. Золото — только на «Получить код» / «Войти».
+ */
+
+/* ---------- Вход ---------- */
+.acc-login { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(var(--s-24), 5vw, var(--s-104)); align-items: start; }
+.acc-login-main { display: grid; align-content: start; max-width: 34rem; }
+.acc-auth { gap: var(--s-24); }
+.acc-phone, .acc-code { font-size: var(--fs-h3); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.acc-code { max-width: 10rem; letter-spacing: .4em; }
+.acc-sent { line-height: 1.5; }
+.acc-sent strong { font-weight: 500; white-space: nowrap; }
+.acc-sent .btn-text { min-height: 32px; vertical-align: baseline; display: inline; }
+.acc-resend { color: var(--muted); font-weight: 400; font-size: var(--fs-body); justify-self: start; }
+.acc-resend:disabled { cursor: default; text-decoration: none; }
+.acc-login-photo { margin: 0; aspect-ratio: 3 / 2; overflow: hidden; background: var(--surface); }
+.acc-login-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Шапка кабинета ---------- */
+.acc-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-16) var(--s-24); margin-bottom: var(--s-40); }
+.acc-who { display: grid; gap: var(--s-8); min-width: 0; }
+.acc-who .page-title:focus { outline: none; }
+.acc-who .page-title:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.acc-who .page-lead { font-variant-numeric: tabular-nums; }
+.acc-logout { color: var(--muted); font-weight: 400; }
+.acc-welcome { margin-bottom: var(--s-24); }
+.acc-tabs { margin-bottom: var(--s-40); }
+.acc-tabs a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.acc-panel:focus { outline: none; }
+.acc-panel-lead { color: var(--muted); line-height: 1.5; margin-bottom: var(--s-24); max-width: 56ch; }
+.acc-col { min-width: 0; }
+.acc-none { color: var(--muted); line-height: 1.55; padding: var(--s-24) 0; border-top: 1px solid var(--ink); max-width: 48ch; }
+.acc-subtitle { font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -.035em; font-weight: 400; }
+.acc-model { color: var(--muted); font-size: var(--fs-small); letter-spacing: .04em; font-weight: 500; }
+.acc-del { color: var(--muted); font-weight: 400; font-size: var(--fs-small); }
+.acc-row-acts { display: flex; flex-wrap: wrap; gap: 0 var(--s-24); align-items: center; }
+.acc-undo { margin-top: var(--s-16); align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.acc-undo .link-line { min-height: 32px; }
+.acc-inline { text-decoration: underline; text-underline-offset: .25em; text-decoration-color: var(--line-strong); color: var(--ink); }
+
+/* ---------- Заказы ---------- */
+.acc-orders { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.acc-order { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "top sum" "meta sum" "thumbs thumbs"; gap: var(--s-8) var(--s-24);
+  padding: var(--s-24) 0; border-bottom: 1px solid var(--line); }
+.acc-order-top { grid-area: top; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-8) var(--s-24); }
+.acc-order-no { font-size: var(--fs-h3); letter-spacing: -.02em; font-weight: 500; text-decoration: underline; text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px; text-underline-offset: .22em; min-height: 32px; display: inline-flex; align-items: center; }
+.acc-order-no:hover { text-decoration-color: currentColor; }
+.acc-order-meta { grid-area: meta; color: var(--muted); font-size: var(--fs-body); }
+.acc-order-sum { grid-area: sum; align-self: start; font-size: var(--fs-h3); letter-spacing: -.02em; text-align: right; padding-top: .25rem; }
+.acc-thumbs { grid-area: thumbs; display: flex; flex-wrap: wrap; gap: var(--s-8); list-style: none; margin: var(--s-8) 0 0; padding: 0; }
+.acc-thumb { position: relative; width: 6rem; aspect-ratio: 1.5; background: var(--surface); overflow: hidden; }
+.acc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.acc-thumb-qty { position: absolute; right: 0; bottom: 0; padding: .125rem .375rem; background: var(--bg); color: var(--ink); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.acc-thumb-more { display: grid; place-items: center; color: var(--muted); font-size: var(--fs-body); }
+
+/* ---------- Адреса ---------- */
+.acc-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.acc-addr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-8) var(--s-24); align-items: start; padding: var(--s-24) 0; border-bottom: 1px solid var(--line); }
+.acc-addr-text { display: grid; gap: .25rem; min-width: 0; }
+.acc-addr-line { font-size: var(--fs-body); line-height: 1.35; letter-spacing: -.015em; overflow-wrap: anywhere; }
+.acc-addr-note { color: var(--muted); font-size: var(--fs-body); line-height: 1.45; overflow-wrap: anywhere; }
+/* Отметка основного адреса: тот же заполненный квадрат, что у статуса «Доставлен», без пилюли. */
+.acc-main-mark { display: inline-flex; align-items: center; gap: .5rem; margin-top: var(--s-8); font-size: var(--fs-body); font-weight: 500; }
+.acc-main-mark::before { content: ""; width: .625rem; height: .625rem; background: var(--ink); flex: none; }
+.acc-addr .acc-row-acts { justify-content: flex-end; }
+
+/* ---------- Предложение из доставленных заказов ---------- */
+.acc-offer { display: grid; gap: var(--s-8); margin-bottom: var(--s-64); padding: var(--s-24) clamp(var(--s-16), 3vw, var(--s-40)); background: var(--surface); }
+.acc-offer-list { list-style: none; margin: var(--s-8) 0 0; padding: 0; }
+.acc-offer-row { display: grid; grid-template-columns: 6rem minmax(0, 1fr) auto; gap: var(--s-16) var(--s-24); align-items: center; padding: var(--s-16) 0; border-top: 1px solid var(--line); }
+.acc-offer-row img { width: 6rem; aspect-ratio: 1.5; height: auto; object-fit: cover; background: var(--bg); }
+.acc-offer-text { display: grid; gap: .25rem; min-width: 0; }
+.acc-offer-meta { color: var(--muted); font-size: var(--fs-small); }
+
+/* ---------- Мои товары ---------- */
+.acc-devices { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.acc-dev { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) minmax(12rem, 15rem); gap: var(--s-24); align-items: start; padding: var(--s-24) 0; border-bottom: 1px solid var(--line); }
+.acc-dev-photo { display: block; aspect-ratio: 1.5; overflow: hidden; background: var(--surface); }
+.acc-dev-photo img { width: 100%; height: 100%; object-fit: cover; }
+.acc-dev-info { display: grid; gap: .25rem; min-width: 0; align-content: start; }
+.acc-dev-name { font-size: var(--fs-h3); line-height: 1.25; letter-spacing: -.025em; overflow-wrap: anywhere; justify-self: start; }
+.acc-dev-name:hover { text-decoration: underline; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+.acc-dev-facts { display: grid; gap: .25rem; margin: var(--s-8) 0 0; font-size: var(--fs-body); }
+.acc-dev-facts div { display: flex; flex-wrap: wrap; gap: 0 .5rem; }
+.acc-dev-facts dt { color: var(--muted); }
+.acc-dev-facts dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.acc-dev-links { display: flex; flex-wrap: wrap; gap: 0 var(--s-24); margin-top: var(--s-8); }
+.acc-warranty { display: grid; gap: var(--s-8); align-content: start; }
+.acc-w-until { display: grid; gap: .25rem; color: var(--muted); font-size: var(--fs-small); }
+.acc-w-until strong { color: var(--ink); font-weight: 500; font-size: var(--fs-body); letter-spacing: -.015em; }
+/* Полоса срока: сколько гарантии уже прошло. */
+.acc-w-bar { height: 4px; background: var(--line); }
+.acc-w-bar span { display: block; height: 100%; background: var(--ink); }
+.acc-w-left { font-size: var(--fs-body); }
+.acc-warranty .acc-del { justify-self: start; }
+.acc-dev.is-over .acc-w-bar span { background: var(--line-strong); }
+.acc-dev.is-over .acc-w-left { color: var(--muted); }
+
+/* ---------- Профиль ---------- */
+.acc-profile { max-width: 40rem; }
+.acc-readonly { background: var(--surface) !important; border-color: var(--line); color: var(--muted); }
+.acc-readonly:hover { border-color: var(--line); }
+.acc-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.acc-fieldset legend { padding: 0; margin-bottom: var(--s-8); }
+.acc-langs { display: flex; flex-wrap: wrap; gap: 0 var(--s-40); }
+.acc-saved { align-items: center; flex-wrap: wrap; }
+.acc-textarea { min-height: 5.5rem; }
+
+/* ---------- Планшет и телефон ---------- */
+@media (max-width: 860px) {
+  .acc-login { grid-template-columns: minmax(0, 1fr); }
+  .acc-login-main { max-width: none; }
+  .acc-dev { grid-template-columns: 6rem minmax(0, 1fr); gap: var(--s-16); }
+  .acc-warranty { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .acc-head { margin-bottom: var(--s-24); }
+  /* Четыре вкладки на телефоне — сеткой 2 × 2, чтобы «Профиль» не прятался за краем. */
+  .acc-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s-16); margin-bottom: var(--s-24); overflow: visible; border-bottom: 0; }
+  .acc-tabs a { white-space: normal; line-height: 1.25; padding-block: .5rem; border-bottom-color: var(--line); margin-bottom: 0; }
+  .acc-order { grid-template-areas: "top top" "meta sum" "thumbs thumbs"; }
+  .acc-order-sum { font-size: var(--fs-body); padding-top: 0; align-self: center; }
+  .acc-thumb { width: 4.5rem; }
+  .acc-addr { grid-template-columns: minmax(0, 1fr); }
+  .acc-addr .acc-row-acts { justify-content: flex-start; }
+  .acc-offer-row { grid-template-columns: 4.5rem minmax(0, 1fr); }
+  .acc-offer-row img { width: 4.5rem; }
+  .acc-offer-row .btn { grid-column: 1 / -1; justify-self: start; }
+  .acc-dev-name { font-size: var(--fs-body); }
+}
+.account.page { padding-top: 0; }   /* крошки и H1 на той же высоте, что у остальных разделов */
