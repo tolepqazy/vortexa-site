@@ -27,6 +27,7 @@
     bag: '<path d="M4.5 7.5h15l.8 13h-16l.7-13Z"/><path d="M8.5 9V6a3.5 3.5 0 0 1 7 0v3"/>',
     user: '<circle cx="12" cy="8.2" r="3.7"/><path d="M4.8 20.2c.9-3.6 3.7-5.6 7.2-5.6s6.3 2 7.2 5.6"/>',
     menu: '<path d="M3.5 8h17M3.5 16h17"/>',
+    grid: '<rect x="4" y="4" width="6.5" height="6.5"/><rect x="13.5" y="4" width="6.5" height="6.5"/><rect x="4" y="13.5" width="6.5" height="6.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5"/>',
     close: '<path d="m5.5 5.5 13 13m0-13-13 13"/>',
     arrow: '<path d="M4 12h15m-5-5 5 5-5 5"/>'
   };
@@ -117,6 +118,23 @@
       '</div></footer>';
   }
 
+  /* ---------- Нижняя панель на телефоне (25.11.2026) ----------
+     Каталог · Поиск · Корзина · Кабинет. Нет в кабинете сотрудников, на товаре (там своя плашка «Купить») и в оформлении. */
+  function tabbar() {
+    var item = function (inner, label, attrs, active) {
+      return '<span class="tab-ico">' + inner + '</span><span class="tab-label">' + label + '</span>';
+    };
+    var user = VX && VX.user && VX.user.get();
+    return '<nav class="tabbar" aria-label="' + t('Быстрые разделы', 'Жылдам бөлімдер') + '"><span class="tab-mark" aria-hidden="true"></span>' +
+      '<button type="button" class="tab" data-open="menu" data-tab-key="menu">' + item(icon('grid'), t('Каталог', 'Каталог')) + '</button>' +
+      '<button type="button" class="tab" data-open="search" data-tab-key="search">' + item(icon('search'), t('Поиск', 'Іздеу')) + '</button>' +
+      '<a class="tab" href="' + page('cart.html') + '" data-cart-link data-tab-key="cart"' + cur('cart.html') + '>' + item(icon('bag') + '<span class="cart-count" data-count hidden>0</span>', t('Корзина', 'Себет')) + '</a>' +
+      '<a class="tab' + (user ? ' is-in' : '') + '" href="' + page('account.html') + '" data-tab-key="account"' + cur('account.html') + '>' + item(icon('user'), user ? t('Кабинет', 'Кабинет') : t('Войти', 'Кіру')) + '</a>' +
+      '</nav>';
+  }
+  var withTabbar = !staffArea && here !== 'checkout.html' &&
+    !document.querySelector('[data-buybar], .model-nav, .product-story');
+
   function dialogs() {
     var close = '<button class="icon-btn" type="button" data-close aria-label="' + t('Закрыть', 'Жабу') + '">' + icon('close') + '</button>';
     var html = '';
@@ -126,9 +144,9 @@
         '<p id="search-status" class="search-status" aria-live="polite"></p><div id="search-results" class="search-results"></div></dialog>';
     }
     if (!document.getElementById('dialog-menu')) {
-      html += '<dialog class="menu-dialog" id="dialog-menu" aria-labelledby="menutitle"><div class="dialog-head"><h2 id="menutitle">' + t('Меню', 'Мәзір') + '</h2>' + close + '</div><nav>' +
-        navLinks(true) + '<a href="' + page('compare.html') + '">' + t('Сравнить увлажнители', 'Ылғалдандырғыштарды салыстыру') + '</a>' +
-        '<a href="' + page('cart.html') + '">' + t('Корзина', 'Себет') + '</a><a href="' + page('account.html') + '">' + t('Личный кабинет', 'Жеке кабинет') + '</a>' +
+      html += '<dialog class="menu-dialog" id="dialog-menu" aria-labelledby="menutitle"><div class="dialog-head"><h2 id="menutitle">' + t('Каталог', 'Каталог') + '</h2>' + close + '</div><nav>' +
+        navLinks(true).replace('>' + t('Каталог', 'Каталог') + '<', '>' + t('Все модели', 'Барлық модельдер') + '<') + '<a href="' + page('compare.html') + '">' + t('Сравнить увлажнители', 'Ылғалдандырғыштарды салыстыру') + '</a>' +
+        '<a class="in-tabbar" href="' + page('cart.html') + '">' + t('Корзина', 'Себет') + '</a><a class="in-tabbar" href="' + page('account.html') + '">' + t('Личный кабинет', 'Жеке кабинет') + '</a>' +
         '<a href="' + page('track.html') + '">' + t('Статус заказа', 'Тапсырыс күйі') + '</a></nav>' + locale() + '</dialog>';
     }
     if (!document.getElementById('notice')) html += '<div class="toast" id="notice" role="status" aria-live="polite"></div>';
@@ -140,6 +158,10 @@
   var footSlot = document.querySelector('[data-shell="footer"]');
   if (headSlot) headSlot.outerHTML = header();
   if (footSlot) footSlot.outerHTML = footer();
+  if (withTabbar) {
+    document.body.insertAdjacentHTML('beforeend', tabbar());
+    document.documentElement.classList.add('has-tabbar');
+  }
   document.body.insertAdjacentHTML('beforeend', dialogs());
 
   /* ---------- Счётчик корзины ---------- */
@@ -202,6 +224,49 @@
     var l = e.target.closest('a[data-locale]');
     if (l) l.setAttribute('href', altHref());
   }, true);
+
+  /* ---------- Нижняя панель: метка и прокрутка ---------- */
+  (function () {
+    var bar = document.querySelector('.tabbar');
+    if (!bar) return;
+    var mark = bar.querySelector('.tab-mark');
+    function place(tab) {
+      if (!tab) { bar.classList.remove('has-mark'); return; }
+      bar.style.setProperty('--mark-x', (tab.offsetLeft + tab.offsetWidth / 2) + 'px');
+      bar.classList.add('has-mark');
+    }
+    var current = bar.querySelector('[aria-current="page"]');
+    // Первая расстановка без анимации, дальше метка переезжает
+    place(current);
+    requestAnimationFrame(function () { bar.classList.add('is-ready'); });
+    window.addEventListener('resize', function () { place(bar.querySelector('.tab.is-active') || current); });
+    bar.addEventListener('click', function (e) {
+      var tab = e.target.closest('.tab');
+      if (!tab) return;
+      Array.prototype.forEach.call(bar.querySelectorAll('.tab'), function (x) { x.classList.toggle('is-active', x === tab); });
+      place(tab);
+    });
+    // Когда шторка или поиск закрыты — метка возвращается на текущую страницу
+    Array.prototype.forEach.call(document.querySelectorAll('#dialog-menu, #dialog-search'), function (d) {
+      d.addEventListener('close', function () {
+        Array.prototype.forEach.call(bar.querySelectorAll('.tab'), function (x) { x.classList.remove('is-active'); });
+        place(current);
+      });
+    });
+    var lastY = window.scrollY, ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY, dy = y - lastY;
+        var nearEnd = y + innerHeight > document.documentElement.scrollHeight - 80;
+        if (dy > 8 && y > 120 && !nearEnd) bar.classList.add('is-away');
+        else if (dy < -8 || nearEnd || y < 120) bar.classList.remove('is-away');
+        if (Math.abs(dy) > 8) lastY = y;
+        ticking = false;
+      });
+    }, {passive: true});
+  })();
 
   /* ---------- Поиск ---------- */
   function normal(v) { return String(v).toLocaleLowerCase().replace(/ё/g, 'е').replace(/[^\p{L}\p{N}]+/gu, ''); }
