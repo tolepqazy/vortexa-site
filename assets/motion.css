@@ -55,7 +55,7 @@
   }
 
   /* Иконки шапки: мягкая смена прозрачности */
-  .icon-btn, .cart-link, .film-toggle, .film-expand, .zoom-btn { transition: opacity var(--mo-micro) var(--mo-ease), transform var(--mo-micro) var(--mo-ease); }
+  .icon-btn, .cart-link, .zoom-btn { transition: opacity var(--mo-micro) var(--mo-ease), transform var(--mo-micro) var(--mo-ease); }
   .icon-btn:active, .cart-link:active { transform: scale(.94); }
 
   /* Счётчик корзины: один короткий толчок при добавлении (класс .bump ставит shell.js) */
@@ -82,10 +82,10 @@
 
   /* Карточки каталога: фото приближается внутри рамки, подпись смещается */
   .card-plate img, .pick-photo img, .search-thumb img { transition: transform var(--mo-macro) var(--mo-ease); }
-  .card-caption h3, .card-caption .card-model { transition: transform var(--mo-mini) var(--mo-ease); }
+  .card-caption h3 { transition: transform var(--mo-mini) var(--mo-ease); }
   @media (hover: hover) {
     .card-plate:hover img, .product-card:hover .card-plate img { transform: scale(1.035); }
-    .product-card:hover .card-caption h3, .product-card:hover .card-caption .card-model { transform: translateX(4px); }
+    .product-card:hover .card-caption h3 { transform: translateX(4px); }
     .pick-photo:hover img, a:hover > .pick-photo img { transform: scale(1.035); }
     .search-row:hover .search-thumb img { transform: scale(1.04); }
   }
@@ -111,7 +111,7 @@
   .model-menu summary i { transition: transform var(--mo-mini) var(--mo-ease); }
 
   /* Меню, поиск, выпадающие: короткий сдвиг при появлении */
-  .search-dialog[open], .menu-dialog[open], .zoom-dialog[open], .film-dialog[open] { animation: mo-drop var(--mo-mini) var(--mo-ease); }
+  .search-dialog[open], .menu-dialog[open], .zoom-dialog[open] { animation: mo-drop var(--mo-mini) var(--mo-ease); }
   dialog[open]::backdrop { animation: mo-fade var(--mo-mini) var(--mo-ease); }
   .model-menu[open] > div, .sx-drop.is-open { animation: mo-drop var(--mo-mini) var(--mo-ease); }
   @keyframes mo-drop { from { opacity: 0; transform: translateY(-8px); } }

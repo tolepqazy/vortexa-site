@@ -222,10 +222,10 @@
       return words.every(function (w) { return text.indexOf(w) !== -1; });
     });
     document.getElementById('search-status').textContent = found.length ? modelCount(found.length) :
-      t('Ничего не найдено. Попробуйте часть названия или модели.', 'Ештеңе табылмады. Атауын немесе модельдің бір бөлігін енгізіп көріңіз.');
+      t('Ничего не найдено. Попробуйте часть названия.', 'Ештеңе табылмады. Атауының бір бөлігін енгізіп көріңіз.');
     document.getElementById('search-results').innerHTML = found.map(function (p) {
       return '<a class="search-row" href="' + page(p.url) + '"><span class="search-thumb"><img src="' + root + p.img + '" alt="" loading="lazy"></span>' +
-        '<span class="search-text"><strong>' + esc(p.name[lang]) + '</strong><span class="model">' + esc(p.model) + '</span></span>' +
+        '<span class="search-text"><strong>' + esc(p.name[lang]) + '</strong><span class="model">' + esc(VX.catalog.categories[p.category][lang]) + '</span></span>' +
         '<span class="search-price price">' + p.priceLabel + '</span></a>';
     }).join('');
   }

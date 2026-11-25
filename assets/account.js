@@ -251,8 +251,8 @@
       const shown = o.items.slice(0, 4);
       const thumbs = shown.map(i => {
         const p = VX.product(i.id);
-        const name = (i.name && i.name[VX.lang]) || (p && p.name[VX.lang]) || i.model;
-        return '<li class="acc-thumb">' + (p ? '<img src="' + esc(VX.asset(p.img)) + '" width="96" height="64" alt="' + esc(name + ' ' + i.model) + '" loading="lazy" decoding="async">' : '') +
+        const name = (i.name && i.name[VX.lang]) || (p && p.name[VX.lang]) || '';
+        return '<li class="acc-thumb">' + (p ? '<img src="' + esc(VX.asset(p.img)) + '" width="96" height="64" alt="' + esc(name) + '" loading="lazy" decoding="async">' : '') +
           (i.qty > 1 ? '<span class="acc-thumb-qty" aria-label="' + esc(i.qty + t(' шт.', ' дана')) + '">×' + i.qty + '</span>' : '') + '</li>';
       }).join('') + (o.items.length > 4 ? '<li class="acc-thumb acc-thumb-more">+' + (o.items.length - 4) + '</li>' : '');
       return '<li class="acc-order">' +
@@ -360,7 +360,7 @@
     VX.products.forEach(p => { (groups[p.category] = groups[p.category] || []).push(p); });
     modelSelect.innerHTML = '<option value="">' + t('Выберите модель', 'Модельді таңдаңыз') + '</option>' +
       Object.keys(groups).map(c => '<optgroup label="' + esc(VX.category(c)) + '">' +
-        groups[c].map(p => '<option value="' + esc(p.id) + '">' + esc(p.name[VX.lang] + ' ' + p.model) + '</option>').join('') + '</optgroup>').join('');
+        groups[c].map(p => '<option value="' + esc(p.id) + '">' + esc(p.name[VX.lang]) + '</option>').join('') + '</optgroup>').join('');
   })();
 
   function warranty(d) {
@@ -405,7 +405,7 @@
       const p = VX.product(o.id);
       return '<li class="acc-offer-row" data-id="' + esc(o.id) + '" data-date="' + esc(o.date) + '" data-key="' + esc(o.key) + '">' +
         '<img src="' + esc(VX.asset(p.img)) + '" width="96" height="64" alt="" loading="lazy" decoding="async">' +
-        '<div class="acc-offer-text"><p class="acc-dev-name">' + esc(p.name[VX.lang]) + ' <span class="acc-model">' + esc(p.model) + '</span></p>' +
+        '<div class="acc-offer-text"><p class="acc-dev-name">' + esc(p.name[VX.lang]) + '</p>' +
         '<p class="acc-offer-meta">' + t('Заказ ', 'Тапсырыс ') + esc(o.no) + t(', получен ', ', алынды: ') + esc(fullDate(o.date)) + '</p></div>' +
         '<button class="btn btn-quiet btn-sm" type="button" data-offer="add">' + t('Добавить', 'Қосу') + '</button>' +
       '</li>';
@@ -421,7 +421,7 @@
       return '<li class="acc-dev' + (w.over ? ' is-over' : '') + '" data-uid="' + esc(d.uid) + '">' +
         '<a class="acc-dev-photo" href="' + esc(p.url) + '" tabindex="-1" aria-hidden="true"><img src="' + esc(VX.asset(p.img)) + '" width="160" height="107" alt="" loading="lazy" decoding="async"></a>' +
         '<div class="acc-dev-info">' +
-          '<span class="acc-model">' + esc(p.model) + '</span>' +
+          '<span class="acc-model">' + esc(VX.category(p.category)) + '</span>' +
           '<a class="acc-dev-name" href="' + esc(p.url) + '">' + esc(p.name[VX.lang]) + '</a>' +
           '<dl class="acc-dev-facts">' +
             '<div><dt>' + t('Серийный номер', 'Сериялық нөмір') + '</dt><dd>' + (d.serial ? esc(d.serial) : '<span class="muted">' + t('не указан', 'көрсетілмеген') + '</span>') + '</dd></div>' +
@@ -436,7 +436,7 @@
           '<p class="acc-w-until">' + t('Гарантия до', 'Кепілдік мерзімі') + '<strong>[' + esc(fullDate(w.until)) + ']' + t('', ' дейін') + '</strong></p>' +
           '<div class="acc-w-bar" role="img" aria-label="' + esc(t('Прошло ', 'Өтті: ') + Math.round(w.share * 100) + t('% срока гарантии', '% кепілдік мерзімі')) + '"><span style="width:' + (w.share * 100).toFixed(1) + '%"></span></div>' +
           '<p class="acc-w-left">' + esc(w.left) + '</p>' +
-          '<button class="btn-text acc-del" type="button" data-dev="remove" aria-label="' + esc(t('Убрать из списка: ', 'Тізімнен алып тастау: ') + p.name[VX.lang] + ' ' + p.model) + '">' + t('Убрать из списка', 'Тізімнен алып тастау') + '</button>' +
+          '<button class="btn-text acc-del" type="button" data-dev="remove" aria-label="' + esc(t('Убрать из списка: ', 'Тізімнен алып тастау: ') + p.name[VX.lang]) + '">' + t('Убрать из списка', 'Тізімнен алып тастау') + '</button>' +
         '</div>' +
       '</li>';
     }).join('');
@@ -450,7 +450,7 @@
     renderDevices();
     if (added) {
       const p = VX.product(added.id);
-      window.VXShell && VXShell.notify(t('Добавлено: ', 'Қосылды: ') + p.name[VX.lang] + ' ' + p.model);
+      window.VXShell && VXShell.notify(t('Добавлено: ', 'Қосылды: ') + p.name[VX.lang]);
       ($('#dev-offer-list [data-offer]') || $('#dev-list .acc-dev-name'))?.focus({ preventScroll: true });
     }
   });
@@ -464,7 +464,7 @@
     VX.user.devices.remove(uid);
     renderDevices();
     const p = VX.product(d.id);
-    showUndo($('#dev-undo'), t('Убрано: ', 'Алынды: ') + p.name[VX.lang] + ' ' + p.model + '.', () => {
+    showUndo($('#dev-undo'), t('Убрано: ', 'Алынды: ') + p.name[VX.lang] + '.', () => {
       VX.user.devices.add({ id: d.id, serial: d.serial, date: d.date });
       renderDevices();
     }, timer => { clearTimeout(devUndoTimer); devUndoTimer = timer; });
@@ -487,7 +487,7 @@
     renderDevices();
     if (added) {
       const p = VX.product(added.id);
-      window.VXShell && VXShell.notify(t('Зарегистрировано: ', 'Тіркелді: ') + p.name[VX.lang] + ' ' + p.model);
+      window.VXShell && VXShell.notify(t('Зарегистрировано: ', 'Тіркелді: ') + p.name[VX.lang]);
     }
   });
   $('#form-device').addEventListener('input', e => { if (e.target.id) setError(e.target, ''); });

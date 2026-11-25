@@ -38,7 +38,7 @@
   const OFF_TEXT = t('Нет в продаже', 'Сатылымда жоқ');
   function buyLabel(button) {
     const p = VX?.product(button.dataset.buy);
-    if (p) button.setAttribute('aria-label', t('Купить: ', 'Сатып алу: ') + p.name[kk ? 'kk' : 'ru'] + ' ' + p.model);
+    if (p) button.setAttribute('aria-label', t('Купить: ', 'Сатып алу: ') + p.name[kk ? 'kk' : 'ru']);
   }
   function applyAvailability() {
     if (!VX) return;

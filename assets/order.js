@@ -148,7 +148,7 @@
         if (p) { ph.href = p.url; ph.tabIndex = -1; ph.setAttribute('aria-hidden', 'true'); const img = el('img'); img.src = VX.asset(p.img); img.alt = ''; img.width = 160; img.height = 107; img.loading = 'lazy'; ph.append(img); }
         const info = el('div', 'cart-info');
         const name = (it.name && it.name[VX.lang]) || (p && p.name[VX.lang]) || it.id;
-        info.append(el('span', 'cart-model', it.model || (p && p.model) || ''), p ? link('cart-name', p.url, name) : el('span', 'cart-name', name),
+        info.append(el('span', 'cart-model', p ? VX.category(p.category) : ''), p ? link('cart-name', p.url, name) : el('span', 'cart-name', name),
           el('span', 'cart-each price', it.qty + t(' шт. × ', ' дана × ') + VX.fmt(it.price)));
         li.append(ph, info, el('span', 'od-line-sum', VX.fmt(it.price * it.qty)));
         ul.append(li);

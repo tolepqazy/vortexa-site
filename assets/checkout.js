@@ -251,7 +251,7 @@
       const img = el('img'); img.src = VX.asset(p.img); img.alt = ''; img.width = 96; img.height = 64; img.loading = 'lazy';
       ph.append(img);
       const txt = el('span', 'co-item-text');
-      txt.append(el('span', '', p.name[VX.lang]), el('small', '', p.model + ', ' + line.qty + t(' шт.', ' дана')));
+      txt.append(el('span', '', p.name[VX.lang]), el('small', '', line.qty + t(' шт.', ' дана')));
       li.append(ph, txt, el('span', 'co-item-sum', VX.fmt(line.sum)));
       return li;
     }));

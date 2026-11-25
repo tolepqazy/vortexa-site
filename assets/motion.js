@@ -257,7 +257,7 @@
   }
 
   /* ================= Вкладки и фильтры: линия переезжает ================= */
-  var TABS = '.filters, .tabs, .gallery-options, .feature-selector, .film-editions';
+  var TABS = '.filters, .tabs, .gallery-options, .feature-selector';
   var ACTIVE = '[aria-pressed="true"], [aria-selected="true"], [aria-current="page"], [aria-current="true"]';
   function setupTabs() {
     if (reduced) return;

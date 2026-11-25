@@ -166,7 +166,7 @@
       list.hidden = !found.length;
       list.innerHTML = found.map(function (p) {
         return '<li><a class="result" href="' + esc(p.url) + '"><img src="' + esc(VX.asset(p.img)) + '" width="720" height="480" alt="" loading="lazy" decoding="async">' +
-          '<span class="result-text"><strong>' + esc(p.name[lang]) + '</strong><span>' + esc(p.model) + ' · ' + esc(VX.category(p.category)) + '</span></span>' +
+          '<span class="result-text"><strong>' + esc(p.name[lang]) + '</strong><span>' + esc(VX.category(p.category)) + '</span></span>' +
           '<span class="price result-price">' + esc(p.priceLabel) + '</span></a></li>';
       }).join('');
       document.title = (q.trim() ? q.trim() + ' — ' : '') + t('Поиск — Vortexa', 'Іздеу — Vortexa');

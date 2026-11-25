@@ -45,7 +45,7 @@
     photo.append(img);
 
     const info = el('div', 'cart-info');
-    const model = el('span', 'cart-model', p.model);
+    const model = el('span', 'cart-model', VX.category(p.category));   // код модели покупателю не показываем
     const name = el('a', 'cart-name', p.name[VX.lang]);
     name.href = p.url;
     const each = el('span', 'cart-each price', VX.fmt(p.price) + t(' за шт.', ' / дана'));
@@ -53,7 +53,7 @@
 
     const qty = el('div', 'qty');
     qty.setAttribute('role', 'group');
-    qty.setAttribute('aria-label', t('Количество', 'Саны') + ': ' + p.model);
+    qty.setAttribute('aria-label', t('Количество', 'Саны') + ': ' + p.name[VX.lang]);
     const less = el('button', '', '−');
     less.type = 'button';
     less.dataset.act = 'less';
@@ -73,7 +73,7 @@
     const remove = el('button', 'cart-remove link-line', t('Удалить', 'Жою'));
     remove.type = 'button';
     remove.dataset.act = 'remove';
-    remove.setAttribute('aria-label', t('Удалить из корзины: ', 'Себеттен жою: ') + p.name[VX.lang] + ' ' + p.model);
+    remove.setAttribute('aria-label', t('Удалить из корзины: ', 'Себеттен жою: ') + p.name[VX.lang]);
 
     const side = el('div', 'cart-side');
     side.append(qty, sum, remove);
@@ -105,7 +105,7 @@
   function showUndo(line) {
     lastRemoved = line;
     undo.replaceChildren();
-    undo.append(el('span', '', t('Удалено: ', 'Жойылды: ') + line.product.name[VX.lang] + ' ' + line.product.model + '.'));
+    undo.append(el('span', '', t('Удалено: ', 'Жойылды: ') + line.product.name[VX.lang] + '.'));
     const back = el('button', 'link-line', t('Вернуть', 'Қайтару'));
     back.type = 'button';
     back.dataset.act = 'undo';
