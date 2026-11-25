@@ -188,3 +188,36 @@
   .product-cinema .product-cinema-copy { margin-top: -6.5rem; padding: 0 var(--gutter) var(--s-40); }
   .product-cinema .product-deck { display: none; }  /* на телефоне над «Купить» — только название, слоган и цена */
 }
+/* ---------- Ролики внутри страниц — фон, текст поверх (владелец 25.11.2026: «Да, делай») ----------
+   «Как крепятся насадки» и такие же блоки на 11 товарах: в роликах вшиты свои подписи, поэтому заголовок НЕ поверх кадра —
+   ролик во всю высоту справа без зазоров, текст слева на тёмном, край кадра слегка уходит в тёмное.
+   «Уборка дома и в машине» на главной: два ролика-плитки, подпись поверх нижнего затемнённого края. */
+.mechanism-film { position: relative; overflow: hidden; }
+.mechanism-film .mechanism-inner { position: relative; display: flex; flex-direction: column; justify-content: center; min-height: calc(62vw * 9 / 16); max-width: none;
+  padding: var(--section) var(--gutter) var(--section) max(var(--gutter), calc((100% - var(--width)) / 2 + var(--gutter))); }
+.mechanism-film .mechanism-inner > header, .mechanism-film .film-chapters { position: relative; z-index: 1; width: 100%; max-width: min(30rem, 32vw); align-self: flex-start; }
+.mechanism-film .mechanism-picture { position: absolute; top: 0; bottom: 0; right: 0; left: 38%; aspect-ratio: auto; margin: 0; align-self: stretch; }
+.mechanism-film .mechanism-picture .film-player { height: 100%; aspect-ratio: auto; }
+.mechanism-film .mechanism-picture video { height: 100%; }
+.mechanism-film .mechanism-picture video { object-fit: cover; object-position: 0% 50%; }  /* вшитые подписи слева — обрезаем только правый край */
+.mechanism-film .mechanism-picture::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(90deg, rgba(17,18,20,1) 0%, rgba(17,18,20,0) 10%); } /* затемнение под текстом: только мягкий край кадра */
+.mechanism-film .film-chapters li { border-color: rgba(17,18,20,0); border-top: 1px solid var(--on-dark-line); }
+.mechanism-film .film-chapters li:last-child { border-bottom: 1px solid var(--on-dark-line); }
+
+.field-section .field-shot { position: relative; display: grid; overflow: hidden; background: var(--dark); }
+.field-section .field-shot > * { grid-area: 1 / 1; }
+.field-section .field-shot .film-player { aspect-ratio: 4 / 3; height: auto; }
+.field-section .field-shot .film-player::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(0deg, rgba(17,18,20,.85) 0%, rgba(17,18,20,.4) 30%, rgba(17,18,20,0) 55%); } /* затемнение под текстом */
+.field-section .field-caption { position: relative; z-index: 1; align-self: end; padding: var(--s-24); }
+
+@media (max-width: 760px) {
+  .mechanism-film .mechanism-inner { display: flex; flex-direction: column; min-height: 0; padding: 0 0 var(--s-40); gap: 0; }
+  .mechanism-film .mechanism-picture { position: relative; inset: auto; left: auto; width: 100%; height: auto; aspect-ratio: 16 / 9; order: -1; }
+  .mechanism-film .mechanism-picture::after { display: none; }
+  .mechanism-film .mechanism-inner > header { margin-top: var(--s-24); padding-inline: var(--gutter); max-width: none; }
+  .mechanism-film .film-chapters { padding-inline: var(--gutter); margin-top: var(--s-16); max-width: none; }
+  .field-section .field-shot .film-player { aspect-ratio: 4 / 5; }
+  .field-section .field-caption { padding: var(--s-16); }
+}
