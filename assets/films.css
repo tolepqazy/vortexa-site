@@ -145,3 +145,46 @@
 .field-intro > p:not(.guide-model) { max-width: 44ch; }
 .field-shots { grid-column: 1 / -1; grid-template-columns: var(--cols-2); column-gap: var(--cols-gap); }
 @media (max-width:760px) { .field-shots { grid-template-columns: minmax(0,1fr); } }
+
+/* ---------- Ролик — фон, текст поверх (владелец 25.11.2026: «где видео это фон а текст поверх») ----------
+   Главная и первый экран товара. Компьютер: ролик на всю высоту справа (~70% ширины) и уходит в тёмный фон слева,
+   текст стоит на этом крае и не закрывает товар. Телефон: ролик крупно сверху, заголовок наезжает на его затемнённый низ.
+   Затемнение кадра под текстом — нейтральное, исключение из запрета градиентов (разрешено владельцем). */
+.cinema-hero { position: relative; }
+.cinema-hero .feature-frame { position: relative; display: flex; flex-direction: column; justify-content: center; max-width: none; min-height: min(90svh, 56rem); }
+.cinema-hero .feature-media { position: absolute; top: 0; bottom: 0; right: 0; left: 30%; width: auto; height: auto; aspect-ratio: auto; order: 0; border-left: 0; }
+.cinema-hero .feature-media video { object-position: 50% 50%; }
+.cinema-hero .feature-media::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(17,18,20,1) 0%, rgba(17,18,20,.55) 22%, rgba(17,18,20,0) 46%), linear-gradient(0deg, rgba(17,18,20,.75) 0%, rgba(17,18,20,0) 26%); } /* затемнение под текстом */
+.cinema-hero .feature-copy { position: relative; z-index: 1; align-self: stretch; width: auto; max-width: none;
+  padding: var(--s-64) var(--gutter) calc(var(--s-64) + 4rem) max(var(--gutter), calc((100% - var(--width)) / 2 + var(--gutter))); }
+.cinema-hero .feature-copy > * { max-width: 30rem; }
+.cinema-hero .feature-selector { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; border-top: 0;
+  padding-inline: max(var(--gutter), calc((100% - var(--width)) / 2 + var(--gutter))); }
+.cinema-hero .feature-selector button { border-bottom-color: transparent; }
+.cinema-hero .feature-selector button[aria-pressed=true] { border-bottom-color: var(--on-dark); }
+
+.product-cinema { position: relative; background: var(--dark);
+  --ink: var(--on-dark); --muted: var(--on-dark-muted); --line: var(--on-dark-line); color: var(--on-dark); }
+.product-cinema .product-cinema-inner { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: stretch; max-width: none; min-height: min(86svh, 54rem); }
+.product-cinema .product-film { position: absolute; top: 0; bottom: 0; right: 0; left: 30%; width: auto; aspect-ratio: auto; order: 0; margin: 0; }
+.product-cinema .product-film video { object-fit: cover; object-position: 50% 50%; }
+.product-cinema .product-film::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(17,18,20,1) 0%, rgba(17,18,20,.55) 22%, rgba(17,18,20,0) 46%); } /* затемнение под текстом */
+.product-cinema .product-cinema-copy { position: relative; z-index: 1; width: 100%; margin: 0; align-self: stretch;
+  padding: var(--s-64) var(--gutter) var(--s-64) max(var(--gutter), calc((100% - var(--width)) / 2 + var(--gutter))); }
+.product-cinema .product-cinema-copy > * { max-width: 30rem; }
+
+@media (max-width: 760px) {
+  .cinema-hero .feature-frame { display: flex; flex-direction: column; justify-content: flex-start; min-height: 0; }
+  .cinema-hero .feature-media { position: relative; inset: auto; left: auto; width: 100%; height: 62svh; max-height: 36rem; }
+  .cinema-hero .feature-media::after { background: linear-gradient(0deg, rgba(17,18,20,1) 0%, rgba(17,18,20,.6) 22%, rgba(17,18,20,0) 50%); } /* затемнение под текстом */
+  .cinema-hero .feature-copy { margin-top: -6.5rem; padding: 0 var(--gutter) var(--s-24); }
+  .cinema-hero .feature-selector { position: static; padding-inline: var(--gutter); border-top: 1px solid var(--on-dark-line); }
+
+  .product-cinema .product-cinema-inner { display: flex; flex-direction: column; min-height: 0; }
+  .product-cinema .product-film { position: relative; inset: auto; left: auto; width: 100%; height: 62svh; max-height: 36rem; order: -1; }
+  .product-cinema .product-film::after { background: linear-gradient(0deg, rgba(17,18,20,1) 0%, rgba(17,18,20,.6) 22%, rgba(17,18,20,0) 50%); } /* затемнение под текстом */
+  .product-cinema .product-cinema-copy { margin-top: -6.5rem; padding: 0 var(--gutter) var(--s-40); }
+  .product-cinema .product-deck { display: none; }  /* на телефоне над «Купить» — только название, слоган и цена */
+}
