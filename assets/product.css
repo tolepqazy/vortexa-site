@@ -372,3 +372,6 @@ html:has(.product-story) { scroll-padding-top: calc(var(--product-bar) + .7rem);
   .ps-story .ps-cover-shot img { aspect-ratio: 1; }
   .ps-facts { grid-template-columns: minmax(0, 1fr); gap: var(--s-24); }
 }
+/* Кадр «Дома» (серия photos/_home, 28.11.2026): снят 3:2, товар в центре — на компьютере кадр целиком, без обрезки сверху и снизу */
+.ps-story .fs-wide-shot img { aspect-ratio: 3 / 2; object-fit: cover; }
+@media (max-width: 760px) { .ps-story .fs-wide-shot img { aspect-ratio: 4 / 3; } }
