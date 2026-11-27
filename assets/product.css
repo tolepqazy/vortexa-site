@@ -193,5 +193,97 @@ html:has(.product-story) { scroll-padding-top: calc(var(--product-bar) + .7rem);
   .terms { gap: var(--s-8) var(--s-16); font-size: var(--fs-small); }
 }
 
-/* 27.11.2026: кадр «В жизни» на странице фена — фен внизу вертикального кадра */
-.shelf-chapter figure img { object-position: 50% 74%; }
+
+/* ================= Фен: одна история (28.11.2026) =================
+   Тёмная часть — устройство: обложка, мотор, воздух, ролик о магнитах. Светлая — насадки, управление, жизнь, вещь, покупка.
+   Текст всегда на одной линии слева (край pd-container). Фон меняется один раз. Тёплое — только в фото. */
+.fs-dark { background: var(--dark); color: var(--on-dark); --ink: var(--on-dark); --muted: var(--on-dark-muted); --line: var(--on-dark-line); }
+.fs-story figure { margin: 0; }
+.fs-story figure img { display: block; width: 100%; }
+
+/* 1. Знакомство: кадр «Люди» на весь экран, текст на тёмной части кадра */
+.product-cinema.fs-hero { position: relative; display: flex; align-items: center; min-height: min(92svh, 60rem); overflow: hidden; }
+.fs-story .fs-hero-shot { position: absolute; inset: 0; }
+.fs-story .fs-hero-shot img { height: 100%; object-fit: cover; object-position: 72% 38%; }
+.fs-hero-copy { position: relative; z-index: 1; width: min(100%, var(--width)); margin-inline: auto; padding: var(--s-104) var(--gutter); }
+.fs-hero-copy > * { max-width: 27rem; }
+.fs-hero h1 { margin: 0 0 .2em; font-size: var(--fs-h1); font-weight: 400; line-height: 1; letter-spacing: -.045em; }
+.fs-hero .product-tagline { font-size: var(--fs-h3); margin: 0; }
+.fs-hero .product-deck { color: var(--muted); margin: var(--s-16) 0 0; max-width: 34ch; }
+.fs-hero .buy-panel { margin-top: var(--s-40); }
+.fs-hero .cover-actions { margin-top: var(--s-24); }
+
+/* 2. Мотор: крупная цифра на чёрном поле кадра */
+.fs-heart { position: relative; display: flex; align-items: center; min-height: min(80svh, 52rem); overflow: hidden; }
+.fs-story .fs-heart-shot { position: absolute; top: 0; bottom: 0; right: 0; width: 70%; }
+.fs-story .fs-heart-shot img { height: 100%; object-fit: cover; object-position: 58% 50%; }
+.fs-story .fs-heart-shot { -webkit-mask-image: linear-gradient(90deg, transparent, rgba(17,18,20,1) 28%); mask-image: linear-gradient(90deg, transparent, rgba(17,18,20,1) 28%); } /* затемнение под текстом: край кадра растворяется в тёмном поле, без шва */
+.fs-heart-copy { position: relative; z-index: 1; width: min(100%, var(--width)); margin-inline: auto; padding: var(--section) var(--gutter); }
+.fs-heart-copy > * { max-width: 30rem; }
+.fs-heart h2 { margin: 0; font-size: var(--fs-h3); font-weight: 400; line-height: 1.2; }
+.fs-num { display: block; font-size: var(--fs-display); line-height: .95; letter-spacing: -.05em; font-variant-numeric: tabular-nums; margin-bottom: .12em; }
+.fs-heart p { margin: var(--s-24) 0 0; color: var(--muted); max-width: 36ch; }
+
+/* 3. Воздух: тёмный кадр продолжает тёмное поле */
+.fs-split { display: grid; grid-template-columns: var(--cols-2); gap: var(--cols-gap); align-items: center; padding-block: var(--section); }
+.fs-intake .fs-split figure img { aspect-ratio: 1.25; object-fit: cover; object-position: 60% 50%; }
+.fs-intake .pd-lead { color: var(--muted); margin-top: var(--s-24); }
+
+/* 4. Ролик о магнитах — тот же чёрный, без шва */
+.fs-story .mechanism-film { background: var(--dark); }
+
+/* 5. Насадки: результат крупно, насадка рядом с подписью */
+.fs-nozzles { background: var(--bg); padding-block: var(--section); }
+.fs-head { margin-bottom: var(--s-64); }
+.fs-head .pd-lead { margin-top: var(--s-24); color: var(--muted); }
+.fs-pairs { display: grid; grid-template-columns: var(--cols-2); gap: var(--cols-gap); }
+.fs-pair-result img { aspect-ratio: .8; object-fit: cover; }
+.fs-pair-smooth .fs-pair-result img { object-position: 42% 40%; }
+.fs-pair-curls .fs-pair-result img { object-position: 30% 50%; }
+.fs-pair-note { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: var(--s-24); align-items: center; padding-top: var(--s-24); }
+.fs-pair-object img { aspect-ratio: 1; object-fit: cover; }
+.fs-pair h3 { margin: 0 0 .35em; font-size: var(--fs-h3); font-weight: 400; letter-spacing: -.02em; }
+.fs-pair p { margin: 0; color: var(--muted); max-width: 34ch; }
+
+/* 6. Управление — на белом, продолжает светлую часть; подписи кнопок — размер подзаголовка, а не заголовка секции */
+.fs-story .control-chapter { background: var(--bg); border-top: 1px solid var(--line); }
+.fs-story .control-note h3 { font-size: var(--fs-h3); letter-spacing: -.02em; margin: 0 0 .35em; }
+.fs-story .control-note + .control-note { margin-top: var(--s-24); }
+.fs-story .control-note p { color: var(--muted); }
+
+/* 7. В жизни: коллаж из трёх кадров «Balmuda» со сдвигом */
+.fs-life { background: var(--bg); padding-block: var(--section); border-top: 1px solid var(--line); }
+.fs-life-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-24); align-items: start; }
+.fs-life-copy { grid-column: 1 / 6; align-self: center; }
+.fs-life-copy .pd-lead { margin-top: var(--s-24); color: var(--muted); }
+.fs-life-hands { grid-column: 6 / 13; }
+.fs-life-hands img { aspect-ratio: 4 / 3; object-fit: cover; }
+.fs-life-family { grid-column: 1 / 8; margin-top: var(--s-24); }
+.fs-life-family img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 40%; }
+.fs-life-shelf { grid-column: 8 / 13; margin-top: var(--s-104); }
+.fs-life-shelf img { aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 72%; }
+
+/* 8. Вещь: предметный кадр на всю ширину — пауза перед комплектом и покупкой */
+.fs-stand img { aspect-ratio: 21 / 9; object-fit: cover; object-position: 50% 45%; }
+.fs-story .kit-chapter { border-bottom: 1px solid var(--line); }
+
+@media (max-width: 1100px) {
+  .product-cinema.fs-hero, .fs-heart { display: block; min-height: 0; }
+  .fs-story .fs-hero-shot, .fs-story .fs-heart-shot { position: relative; inset: auto; width: 100%; -webkit-mask-image: none; mask-image: none; }
+  .fs-story .fs-hero-shot img { height: auto; aspect-ratio: 16 / 10; object-position: 70% 40%; }
+  .fs-story .fs-heart-shot img { height: auto; aspect-ratio: 16 / 10; }
+  .fs-hero-copy { padding: var(--s-40) var(--gutter) var(--section-sm); }
+  .fs-heart-copy { padding: var(--s-40) var(--gutter) var(--section-sm); }
+}
+@media (max-width: 760px) {
+  .fs-story .fs-hero-shot img { aspect-ratio: 4 / 5; object-position: 74% 40%; }
+  .fs-story .fs-heart-shot img { aspect-ratio: 1; object-position: 60% 50%; }
+  .fs-split, .fs-pairs { grid-template-columns: minmax(0, 1fr); gap: var(--s-40); }
+  .fs-head { margin-bottom: var(--s-40); }
+  .fs-pair-note { grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--s-16); }
+  .fs-life-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-16); }
+  .fs-life-copy, .fs-life-hands, .fs-life-family, .fs-life-shelf { grid-column: 1; margin-top: 0; }
+  .fs-life-copy { margin-bottom: var(--s-24); }
+  .fs-life-shelf img { aspect-ratio: 4 / 5; }
+  .fs-stand img { aspect-ratio: 4 / 3; }
+}

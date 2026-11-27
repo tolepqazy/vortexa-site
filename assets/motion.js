@@ -46,7 +46,7 @@
     '.catalog-heading', '.more-row', '.block-title', '.info-head', '.chapter-heading', '.pd-heading', '.pd-lead',
     '.guide-intro', '.chooser-intro', '.spec-intro', '.mechanism-inner > header', '.intake-copy',
     '.band .wrap > *', '.photo-thought > :not(figure)', '.trio-note', '.compare-feature > div', '.compare-next',
-    '.cmp-pair', '.field-intro', '.source-note', '.links'
+    '.cmp-pair', '.field-intro', '.source-note', '.links', '.fs-copy'
   ];
   // Группы: дети появляются лесенкой
   var GROUPS = [
@@ -56,7 +56,7 @@
   // Крупные фото: раскрытие маской
   var MASK = [
     '.wide-photo', '.photo-thought figure', '.construction-plane', '.daily-chapter figure', '.intake-study figure',
-    '.compare-feature figure', '.styling-chapter figure', '.magnet-chapter figure', '.mechanism-picture', '.trio figure'
+    '.compare-feature figure', '.styling-chapter figure', '.magnet-chapter figure', '.mechanism-picture', '.trio figure', '.fs-story .fs-shot'
   ];
   var SKIP = '.cinema-hero, .product-cinema, .site-header, .footer, dialog, .model-nav, .buybar, .sx-top, .sx-nav';
 
