@@ -238,3 +238,6 @@
   .live-strip { gap: 8px; }
   .live-clip { height: min(420px, 64svh, calc((100vw - 48px) / (var(--ratio)))); }
 }
+
+/* 27.11.2026: кадр «Люди» после обложки главной — лицо и сопло справа, не обрезать */
+.portrait-feature figure img { object-position: 72% 50%; }

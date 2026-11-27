@@ -192,3 +192,6 @@ html:has(.product-story) { scroll-padding-top: calc(var(--product-bar) + .7rem);
   .buy-panel .cover-actions { gap: var(--s-8) var(--s-24); }
   .terms { gap: var(--s-8) var(--s-16); font-size: var(--fs-small); }
 }
+
+/* 27.11.2026: кадр «В жизни» на странице фена — фен внизу вертикального кадра */
+.shelf-chapter figure img { object-position: 50% 74%; }
