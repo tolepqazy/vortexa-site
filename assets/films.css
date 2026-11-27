@@ -221,3 +221,20 @@
   .field-section .field-shot .film-player { aspect-ratio: 4 / 5; }
   .field-section .field-caption { padding: var(--s-16); }
 }
+
+/* Ролики клиента внизу страницы товара (27.11.2026). Тихо: без подписей и кнопок, одной высоты, листаются вбок. */
+.live-chapter { padding-block: var(--section-sm); border-top: 1px solid var(--line); }
+.live-head { display: grid; gap: 8px; margin-bottom: 32px; }
+.live-head .pd-heading { margin: 0; letter-spacing: -0.02em; }
+.live-head p { margin: 0; color: var(--muted); max-width: 65ch; }
+.live-strip { list-style: none; margin: 0; display: flex; gap: 12px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding: 0 max(var(--gutter), calc((100% - var(--width)) / 2 + var(--gutter))); scroll-padding-inline: max(var(--gutter), calc((100% - var(--width)) / 2 + var(--gutter))); }
+.live-strip::-webkit-scrollbar { display: none; }
+.live-clip { flex: 0 0 auto; height: min(480px, 62svh, calc((100vw - 64px) / (var(--ratio)))); aspect-ratio: var(--ratio); scroll-snap-align: start; overflow: hidden; background: var(--line); }
+.live-clip .film-player { background: var(--line); }
+.live-clip video { object-fit: cover; }
+@media (max-width: 760px) {
+  .live-head { margin-bottom: 24px; }
+  .live-strip { gap: 8px; }
+  .live-clip { height: min(420px, 64svh, calc((100vw - 48px) / (var(--ratio)))); }
+}
