@@ -286,3 +286,55 @@ html:has(.product-story) { scroll-padding-top: calc(var(--product-bar) + .7rem);
   .fs-life-shelf img { aspect-ratio: 4 / 5; }
   .fs-stand img { aspect-ratio: 4 / 3; }
 }
+
+/* ================= История остальных 10 товаров (28.11.2026) =================
+   Та же система, что у фена: тёмная часть (обложка, главная цифра, ролик) и один переход на белый. */
+/* Обложка: студийный кадр на чёрном справа, его фон совпадает с фоном страницы — шва нет, края ровные */
+.product-cinema.fs-cover { position: relative; display: flex; align-items: center; min-height: min(90svh, 58rem); overflow: hidden; }
+.fs-story .fs-cover-shot { position: absolute; top: 0; bottom: 0; right: 0; width: 50%; }
+.fs-story .fs-cover-shot img { height: 100%; object-fit: cover; object-position: 50% 55%; }
+.fs-cover .fs-hero-copy > * { max-width: 27rem; }
+.fs-cover h1 { margin: 0 0 .2em; font-size: var(--fs-h1); font-weight: 400; line-height: 1; letter-spacing: -.045em; }
+.fs-cover .product-tagline { font-size: var(--fs-h3); margin: 0; }
+.fs-cover .product-deck { color: var(--muted); margin: var(--s-16) 0 0; max-width: 34ch; }
+.fs-cover .buy-panel { margin-top: var(--s-40); }
+.fs-cover .cover-actions { margin-top: var(--s-24); }
+
+/* Главная цифра и ещё два факта строками, рядом тёмный кадр у лампы */
+.fs-numbers h2 { margin: 0; font-size: var(--fs-h3); font-weight: 400; line-height: 1.2; }
+.fs-facts { margin: var(--s-40) 0 0; max-width: 26rem; }
+.fs-facts > div { display: flex; justify-content: space-between; gap: var(--s-24); padding: var(--s-16) 0; border-top: 1px solid var(--line); }
+.fs-facts > div:last-child { border-bottom: 1px solid var(--line); }
+.fs-facts dt { color: var(--muted); }
+.fs-facts dd { margin: 0; text-align: right; }
+.fs-numbers .fs-split figure img { aspect-ratio: 4 / 5; object-fit: cover; }
+
+/* Конструкция — первый белый экран */
+.fs-detail { background: var(--bg); }
+.fs-detail .fs-split figure img { aspect-ratio: 4 / 3; object-fit: cover; }
+.fs-detail .pd-lead { margin-top: var(--s-24); color: var(--muted); }
+
+/* В жизни: кадр на всю ширину, текст под ним в две колонки */
+.fs-wide { background: var(--bg); padding-bottom: var(--section); }
+.fs-wide-shot img { aspect-ratio: 21 / 9; object-fit: cover; }
+.fs-wide-copy { display: grid; grid-template-columns: var(--cols-2); gap: var(--cols-gap); padding-top: var(--s-40); align-items: start; }
+.fs-wide-copy .pd-lead { color: var(--muted); }
+.fs-wide-copy .link-line { display: inline-block; margin-top: var(--s-16); }
+
+/* Вещь: два студийных ракурса рядом */
+.fs-object { background: var(--bg); padding-bottom: var(--section); }
+.fs-object-pair { display: grid; grid-template-columns: var(--cols-2); gap: var(--s-24); }
+.fs-object-pair img { aspect-ratio: 4 / 5; object-fit: cover; }
+
+@media (max-width: 1100px) {
+  .product-cinema.fs-cover { display: block; min-height: 0; }
+  .fs-story .fs-cover-shot { position: relative; width: 100%; }
+  .fs-story .fs-cover-shot img { height: auto; aspect-ratio: 4 / 3; object-position: 50% 55%; }
+  .fs-cover .fs-hero-copy { padding: var(--s-24) var(--gutter) var(--section-sm); }
+}
+@media (max-width: 760px) {
+  .fs-story .fs-cover-shot img { aspect-ratio: 1; }
+  .fs-wide-shot img { aspect-ratio: 4 / 3; }
+  .fs-wide-copy { grid-template-columns: minmax(0, 1fr); gap: var(--s-16); padding-top: var(--s-24); }
+  .fs-object-pair { gap: var(--s-8); }
+}
